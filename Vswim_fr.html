@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>棒人間が泳いでいるアニメーション</title>
+    <style>
+        canvas {
+            background-color: #e0f7fa;
+            /* 水の色 */
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="swimCanvas" width="800" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('swimCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let swimmerX = 100;
+        let armAngle = 0;
+        let armDirection = 1; // 1 = forward, -1 = backward
+
+        function drawStickman(x, y) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // 画面クリア
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 3;
+
+            // 頭
+            ctx.beginPath();
+            ctx.arc(x, y, 20, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // 体
+            ctx.beginPath();
+            ctx.moveTo(x, y + 20);
+            ctx.lineTo(x, y + 80);
+            ctx.stroke();
+
+            // 腕 (前進・後退を表現)
+            ctx.beginPath();
+            ctx.moveTo(x, y + 40);
+            const armLength = 50;
+            const armX = x + armLength * Math.cos(armAngle);
+            const armY = y + 40 + armLength * Math.sin(armAngle);
+            ctx.lineTo(armX, armY);
+            ctx.stroke();
+
+            // もう一つの腕（反対側）
+            ctx.beginPath();
+            ctx.moveTo(x, y + 40);
+            ctx.lineTo(x - armLength * Math.cos(armAngle), y + 40 - armLength * Math.sin(armAngle));
+            ctx.stroke();
+
+            // 足
+            ctx.beginPath();
+            ctx.moveTo(x, y + 80);
+            ctx.lineTo(x - 30, y + 120);
+            ctx.moveTo(x, y + 80);
+            ctx.lineTo(x + 30, y + 120);
+            ctx.stroke();
+        }
+
+        function updateAnimation() {
+            swimmerX += 2; // 水平移動
+            if (swimmerX > canvas.width) swimmerX = -50; // 画面外に出たら戻す
+
+            // 腕の動き
+            armAngle += armDirection * 0.1;
+            if (armAngle > Math.PI / 4 || armAngle < -Math.PI / 4) {
+                armDirection *= -1; // 腕の進行方向を反転
+            }
+
+            drawStickman(swimmerX, 200);
+            requestAnimationFrame(updateAnimation);
+        }
+
+        // 初回の描画とアニメーション開始
+        updateAnimation();
+    </script>
+</body>
+
+</html>

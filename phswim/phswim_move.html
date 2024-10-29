@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>phswim_move</title>
+</head>
+
+<body>
+    <canvas id="graph" width="800" height="600"></canvas>
+    <script>
+        let faceX = 400;
+        let faceY = 300;
+        let r = 30;
+        let angle = 0; // 腕の角度
+
+        function init() {
+            const canvas = document.getElementById("graph");
+            const ctx = canvas.getContext("2d");
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // 画面クリア
+
+                // 顔の円を描画
+                ctx.fillStyle = "black";
+                ctx.beginPath();
+                ctx.arc(faceX, faceY, r, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // 胴体を描画
+                ctx.beginPath();
+                ctx.moveTo(faceX - r, faceY);
+                ctx.lineTo(faceX - 7 * r, faceY);
+                ctx.stroke();
+
+                // 腕を描画（肩から肘、肘から手の部分）
+                const shoulderX = faceX - 5 / 3 * r; // 肩の位置
+                const shoulderY = faceY;
+
+                const elbowX = shoulderX + Math.cos(angle) * 8 / 3 * r; // 肘の位置
+                const elbowY = shoulderY + Math.sin(angle) * 8 / 3 * r;
+
+                const handX = elbowX + Math.cos(angle + Math.PI / 4) * 3 * r; // 手の位置
+                const handY = elbowY + Math.sin(angle + Math.PI / 4) * 3 * r;
+
+                // 肩から肘の線を描画
+                ctx.beginPath();
+                ctx.moveTo(shoulderX, shoulderY);
+                ctx.lineTo(elbowX, elbowY);
+                ctx.stroke();
+
+                // 肘から手の線を描画
+                ctx.beginPath();
+                ctx.moveTo(elbowX, elbowY);
+                ctx.lineTo(handX, handY);
+                ctx.stroke();
+
+                // 角度を変化させて腕を動かす
+                angle += 0.05;
+
+                requestAnimationFrame(animate); // 次フレームを呼び出し
+            }
+
+            animate(); // アニメーション開始
+        }
+
+        window.onload = init;
+    </script>
+</body>
+
+</html>
