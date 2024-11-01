@@ -5,8 +5,8 @@ let angle1 = 0; // 腕1の角度
 let angle2 = Math.PI; // 腕2の角度（反対側から開始）
 let leftLegAngle = -Math.PI / 6; // 左足の初期角度
 let rightLegAngle = Math.PI / 6; // 右足の初期角度
-let leftLegDirection = 0.10; // 左足の動く方向（増減）
-let rightLegDirection = -0.10; // 右足の動く方向（増減）
+let leftLegDirection = 0.08; // 左足の動く方向（増減）
+let rightLegDirection = -0.08; // 右足の動く方向（増減）
 
 function init() {
     const canvas = document.getElementById("graph");
@@ -45,17 +45,21 @@ function init() {
 
     function drawLeg(x, y, angle, isLeft) {
         const footX = x - Math.cos(angle) * r; // 足先のX座標
-        const footY = y - Math.sin(angle) * r; // 足先のY座標
+        const footY = y - Math.sin(angle) * r + 5; // 足先のY座標
+        const ankleX = footX - Math.cos(angle + Math.PI / 24) * 2.5 * r; // 足首のX座標（足先からrの距離）
+        const ankleY = footY - Math.sin(angle + Math.PI / 24) * 2.5 * r + 10; // 足首のY座標（足先からrの距離）
 
+        // 足の基点から足先への線を描画
         ctx.beginPath();
         ctx.moveTo(x, y); // 足の基点
-        ctx.lineTo(footX - 2 * r, footY); // 足先までの線
+        ctx.lineTo(footX, footY); // 足先までの線
         ctx.stroke();
 
-        // 足先の円弧を描画
+        // 足首の線を描画
         ctx.beginPath();
-        ctx.arc(footX, footY, r / 100, Math.PI * (-1), Math.PI * 2, true);
-        ctx.fill();
+        ctx.moveTo(footX, footY); // 足先
+        ctx.lineTo(ankleX, ankleY); // 足首までの線
+        ctx.stroke();
     }
 
     function animate() {
@@ -96,12 +100,12 @@ function init() {
         rightLegAngle += rightLegDirection;
 
         // 左足が-150度から150度の範囲を超えたら方向を反転
-        if (leftLegAngle > Math.PI / 5 || leftLegAngle < -Math.PI / 5) {
+        if (leftLegAngle > Math.PI / 6 || leftLegAngle < -Math.PI / 6) {
             leftLegDirection *= -1;
         }
 
         // 右足が-150度から150度の範囲を超えたら方向を反転
-        if (rightLegAngle > Math.PI / 5 || rightLegAngle < -Math.PI / 5) {
+        if (rightLegAngle > Math.PI / 6 || rightLegAngle < -Math.PI / 6) {
             rightLegDirection *= -1;
         }
 
