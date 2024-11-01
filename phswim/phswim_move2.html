@@ -4,10 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>phswim_move2</title>
+    <title>phswim_move3</title>
 </head>
 
 <body>
+    <div>
+        <h2>phswim_move2</h2>
+    </div>
+    <div>
+        <button onclick="changeSpeed(0.04)">速度: 0.04</button>
+        <button onclick="changeSpeed(0.08)">速度: 0.08</button>
+        <button onclick="changeSpeed(0.12)">速度: 0.12</button>
+    </div>
     <canvas id="graph" width="800" height="600"></canvas>
     <script>
         let faceX = 400;
@@ -17,8 +25,15 @@
         let angle2 = Math.PI; // 腕2の角度（反対側から開始）
         let leftLegAngle = -Math.PI / 6; // 左足の初期角度
         let rightLegAngle = Math.PI / 6; // 右足の初期角度
-        let leftLegDirection = 0.08; // 左足の動く方向（増減）
-        let rightLegDirection = -0.08; // 右足の動く方向（増減）
+        let speed = 0.08; // デフォルトの速度
+        let leftLegDirection = speed; // 左足の動く方向（増減）
+        let rightLegDirection = -speed; // 右足の動く方向（増減）
+
+        function changeSpeed(newSpeed) {
+            speed = newSpeed;
+            leftLegDirection = speed;
+            rightLegDirection = -speed;
+        }
 
         function init() {
             const canvas = document.getElementById("graph");
@@ -60,26 +75,26 @@
             }
 
             function drawLeg(x, y, angle, isLeft) {
-                const footX = x - Math.cos(angle) * r; // 足先のX座標
-                const footY = y - Math.sin(angle) * r + 5; // 足先のY座標
-                const ankleX = footX - Math.cos(angle + Math.PI / 24) * 2.5 * r; // 足首のX座標（足先からrの距離）
-                const ankleY = footY - Math.sin(angle + Math.PI / 24) * 2.5 * r + 10; // 足首のY座標（足先からrの距離）
+                const footX = x - Math.cos(angle) * r;
+                const footY = y - Math.sin(angle) * r + 5;
+                const ankleX = footX - Math.cos(angle + Math.PI / 24) * 2.5 * r;
+                const ankleY = footY - Math.sin(angle + Math.PI / 24) * 2.5 * r + 10;
 
                 // 足の基点から足先への線を描画
                 ctx.beginPath();
-                ctx.moveTo(x, y); // 足の基点
-                ctx.lineTo(footX, footY); // 足先までの線
+                ctx.moveTo(x, y);
+                ctx.lineTo(footX, footY);
                 ctx.stroke();
 
                 // 足首の線を描画
                 ctx.beginPath();
-                ctx.moveTo(footX, footY); // 足先
-                ctx.lineTo(ankleX, ankleY); // 足首までの線
+                ctx.moveTo(footX, footY);
+                ctx.lineTo(ankleX, ankleY);
                 ctx.stroke();
             }
 
             function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height); // 画面クリア
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                 // 1本目の腕（通常）
                 drawArm(angle1, true);
@@ -99,7 +114,7 @@
 
                 // 2本目の腕（後ろ側）
                 ctx.save();
-                ctx.globalCompositeOperation = 'destination-over'; // 顔の後ろに表示する
+                ctx.globalCompositeOperation = 'destination-over';
                 drawArm(angle2, false);
                 ctx.restore();
 
@@ -126,13 +141,13 @@
                 }
 
                 // 腕の角度を変化させて動かす
-                angle1 += 0.10;
-                angle2 += 0.10;
+                angle1 += speed;
+                angle2 += speed;
 
-                requestAnimationFrame(animate); // 次フレームを呼び出し
+                requestAnimationFrame(animate);
             }
 
-            animate(); // アニメーション開始
+            animate();
         }
 
         window.onload = init;
