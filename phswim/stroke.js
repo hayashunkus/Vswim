@@ -74,7 +74,7 @@ function init() {
         // 胴体の描画
         ctx.beginPath();
         ctx.moveTo(faceX - r, faceY);
-        ctx.lineTo(faceX - 7 * r, faceY);
+        ctx.lineTo(faceX - 6 * r, faceY);
         ctx.stroke();
 
         // 2本目の腕（後ろ側）
@@ -85,11 +85,11 @@ function init() {
 
         // 左足を描画
         ctx.fillStyle = "blue";
-        drawLeg(faceX - 7 * r, faceY, leftLegAngle, false);
+        drawLeg(faceX - 6 * r, faceY, leftLegAngle, false);
 
         // 右足を描画
         ctx.fillStyle = "red";
-        drawLeg(faceX - 7 * r, faceY, rightLegAngle, true);
+        drawLeg(faceX - 6 * r, faceY, rightLegAngle, true);
 
         // 左足と右足の角度を更新してワイパーの動きを作成
         leftLegAngle += leftLegDirection;
