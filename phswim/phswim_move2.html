@@ -22,6 +22,10 @@
 
         function init() {
             const canvas = document.getElementById("graph");
+            if (!canvas || !canvas.getContext) {
+                document.body.innerHTML = "エラーです";
+                return;
+            }
             const ctx = canvas.getContext("2d");
 
             function drawArm(angle, isLeft) {
