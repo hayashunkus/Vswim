@@ -1,18 +1,16 @@
 body {
     color: #000000;
-    background-color: aqua;
+    background-color: #e0f7fa;
+    /* 少し落ち着いた青に変更 */
 }
 
-#high {
-    position: absolute;
-    top: 20px;
-    left: 400px;
-    background-color: aliceblue;
-}
-
+#high,
 #weight {
-    position: absolute;
-    top: 60px;
-    left: 400px;
+    margin-left: 20px;
     background-color: aliceblue;
+}
+
+canvas {
+    margin-top: 20px;
+    display: block;
 }

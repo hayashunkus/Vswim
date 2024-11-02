@@ -1,5 +1,5 @@
-let faceX = 400;
-let faceY = 300;
+let faceX = 500;
+let faceY = 200;
 let r = 30;
 let angle1 = 0; // 腕1の角度
 let angle2 = Math.PI; // 腕2の角度（反対側から開始）
