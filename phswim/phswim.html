@@ -8,99 +8,16 @@
 </head>
 
 <body>
+    <div>
+        <h2>phswim_move3</h2>
+    </div>
+    <div>
+        <button onclick="changeSpeed(0.04)">速度: 0.04</button>
+        <button onclick="changeSpeed(0.08)">速度: 0.08</button>
+        <button onclick="changeSpeed(0.12)">速度: 0.12</button>
+    </div>
     <canvas id="graph" width="800" height="600"></canvas>
-    <script>
-        let faceX = 400;
-        let faceY = 300;
-        let r = 30;
-        let angle = 0; // 腕の角度
-        let passedNegativeCosine = false; // コサインが負の領域を一度通過したかのフラグ
-
-        function init() {
-            const canvas = document.getElementById("graph");
-            const ctx = canvas.getContext("2d");
-
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height); // 画面クリア
-
-                // 顔の円を描画
-                ctx.fillStyle = "black";
-                ctx.beginPath();
-                ctx.arc(faceX, faceY, r, 0, Math.PI * 2);
-                ctx.stroke();
-
-                // 胴体を描画
-                ctx.beginPath();
-                ctx.moveTo(faceX - r, faceY);
-                ctx.lineTo(faceX - 7 * r, faceY);
-                ctx.stroke();
-
-                // 肩の位置
-                const shoulderX = faceX - 5 / 3 * r;
-                const shoulderY = faceY;
-
-                let elbowX, elbowY, handX, handY;
-
-                // 腕の角度の制御
-                const sin = Math.sin(angle);
-                const cos = Math.cos(angle);
-
-                if (sin > 0 && cos > 0) {
-                    // サインが正かつコサインが正の時
-                    elbowX = shoulderX + Math.cos(angle) * 8 / 3 * r;
-                    elbowY = shoulderY + Math.sin(angle) * 8 / 3 * r;
-                    handX = elbowX + Math.cos(angle + Math.PI / 6) * 3 * r;
-                    handY = elbowY + Math.sin(angle + Math.PI / 6) * 3 * r;
-                    passedNegativeCosine = true; // フラグリセット
-
-                } else if (sin > 0 && cos < 0 && !passedNegativeCosine) {
-                    // サインが正かつコサインが負の時 (1度目のみ)
-                    elbowX = shoulderX + Math.cos(angle) * 8 / 3 * r;
-                    elbowY = shoulderY + Math.sin(angle) * 8 / 3 * r;
-                    handX = elbowX + Math.cos(angle) * 3 * r;
-                    handY = elbowY + Math.sin(angle) * 3 * r;
-                    passedNegativeCosine = false; // フラグを立てて二度目を防止
-
-                } else if (sin < 0 && cos < 0) {
-                    // サインが負かつコサインが負の時
-                    const quarterArcAngle = angle - Math.PI / 2;
-                    elbowX = shoulderX + Math.cos(quarterArcAngle) * 8 / 3 * r;
-                    elbowY = shoulderY + Math.sin(quarterArcAngle) * 8 / 3 * r;
-                    handX = elbowX + Math.cos(quarterArcAngle - Math.PI / 2) * 3 * r;
-                    handY = elbowY + Math.sin(quarterArcAngle - Math.PI / 2) * 3 * r;
-
-                } else if (sin < 0 && cos > 0) {
-                    // サインが負かつコサインが正の時
-                    const adjustedAngle = angle - Math.PI / 2; // 1/4円弧の角度を使用
-                    elbowX = shoulderX + Math.cos(adjustedAngle) * 8 / 3 * r;
-                    elbowY = shoulderY + Math.sin(adjustedAngle) * 8 / 3 * r;
-                    handX = elbowX + Math.cos(adjustedAngle - Math.PI / 2) * 3 * r;
-                    handY = elbowY + Math.sin(adjustedAngle - Math.PI / 2) * 3 * r;
-                }
-
-                // 肩から肘の線を描画
-                ctx.beginPath();
-                ctx.moveTo(shoulderX, shoulderY);
-                ctx.lineTo(elbowX, elbowY);
-                ctx.stroke();
-
-                // 肘から手の線を描画
-                ctx.beginPath();
-                ctx.moveTo(elbowX, elbowY);
-                ctx.lineTo(handX, handY);
-                ctx.stroke();
-
-                // 角度を変化させて腕を動かす
-                angle += 0.05;
-
-                requestAnimationFrame(animate); // 次フレームを呼び出し
-            }
-
-            animate(); // アニメーション開始
-        }
-
-        window.onload = init;
-    </script>
+    <script src="stroke.js"></script>
 </body>
 
 </html>
