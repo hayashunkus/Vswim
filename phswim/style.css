@@ -4,8 +4,10 @@ body {
     /* 少し落ち着いた青に変更 */
 }
 
+#age,
 #high,
-#weight {
+#weight,
+#heartrate {
     margin-left: 20px;
     background-color: aliceblue;
 }
