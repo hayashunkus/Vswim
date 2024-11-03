@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>phswim_move3</title>
+    <title>phswim_move</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div>
-        <h2>phswim_move3</h2>
+        <h2>phswim_move</h2>
     </div>
     <div>
         <button onclick="changeSpeed(0.04)">速度: 1</button>
@@ -34,6 +34,12 @@
         <label for="strl">ストローク長　　　</label>
         <input type="text" name="strl" id="strl">
     </p>
+
+    <!-- 計算結果を表示するエリア -->
+    <div id="result">速度: 0 m/s<br> 抵抗力 R: 0 N<br>パワー P: 0 W</div>
+
+    <!-- 結果出力ボタンを追加 -->
+    <button onclick="calculateAndDisplayResults()">結果出力</button>
 
     <canvas id="graph" width="800" height="600"></canvas>
     <script src="stroke.js"></script>
