@@ -14,7 +14,29 @@ function changeSpeed(newSpeed) {
     leftLegDirection = speed;
     rightLegDirection = -speed;
 }
+function calculateAndDisplayResults() {
+    // 入力値を取得して小数点第一位まで読み取る
+    const height = parseFloat(document.getElementById("high").value) || 0;
+    const weight = parseFloat(document.getElementById("weight").value) || 0;
+    const strl = parseFloat(document.getElementById("strl").value) || 0;
+    const strt = parseFloat(document.getElementById("strt").value) || 0;
 
+    // 速度を計算（ストローク長 × ストロークテンポ）
+    const speed = strl * strt;
+
+    // ヒトの断面積 A を計算
+    const A = 0.20247 * Math.pow(height, 0.725) * Math.pow(weight, 0.425);
+
+    // 抵抗力 R を計算　Cd=0.7
+    const R = 0.5 * 0.7 * 1000 * A * Math.pow(speed, 2);
+
+    // パワー P を計算
+    const P = R * speed;
+
+    // 結果を右上の #result に表示
+    document.getElementById("result").innerHTML =
+        `速度: ${speed.toFixed(1)}m/s<br>抵抗力 R: ${R.toFixed(1)}N<br>パワー P: ${P.toFixed(1)}W`;
+}
 function init() {
     const canvas = document.getElementById("graph");
     if (!canvas || !canvas.getContext) {
