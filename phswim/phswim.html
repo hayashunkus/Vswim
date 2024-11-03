@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>phswim_move</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* 計算結果を表示する位置を右上に設定 */
+        #result {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,16 +37,35 @@
         <input type="text" name="weight" id="weight">
     </p>
     <p>
-        <label for="strt">ストロークテンポ　</label>
+        <label for="strt">ストロークテンポ（回/ｓ）　</label>
         <input type="text" name="strt" id="strt">
     </p>
     <p>
-        <label for="strl">ストローク長　　　</label>
+        <label for="strl">ストローク長（ｍ/回）　　　</label>
         <input type="text" name="strl" id="strl">
     </p>
 
+    <!-- 計算結果を表示するエリア -->
+    <div id="result">速度: 0</div>
+
+    <!-- 結果出力ボタンを追加 -->
+    <button onclick="calculateAndDisplaySpeed()">結果出力</button>
+
     <canvas id="graph" width="800" height="600"></canvas>
     <script src="stroke.js"></script>
+    <script>
+        function calculateAndDisplaySpeed() {
+            // ストローク長とストロークテンポを取得
+            const strl = parseFloat(document.getElementById("strl").value) || 0;
+            const strt = parseFloat(document.getElementById("strt").value) || 0;
+
+            // 速度を計算（ストローク長 × ストロークテンポ）
+            const speed = strl * strt;
+
+            // 結果を右上の #result に表示
+            document.getElementById("result").textContent = "速度: " + speed.toFixed(2);
+        }
+    </script>
 </body>
 
 </html>
