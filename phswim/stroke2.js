@@ -29,14 +29,22 @@ function calculateAndDisplayResults() {
         document.getElementById("result").innerHTML = "計算できません";
         return;
     }
+    // ストロークテンポから腕の回転速度を設定
+    changeSpeed(strt); // 入力されたストロークテンポから speed を計算
+    // 新しいspeedをストロークテンポから計算し、速すぎないように上限を設定
+    speed = Math.min(2 * Math.PI * strt * 0.1, 0.15);
+    leftLegDirection = speed;
+    rightLegDirection = -speed;
 
-    const speed = strl * strt;
+
+    const swimSpeed = strl * strt;
     const A = 0.20247 * Math.pow(height / 100, 0.725) * Math.pow(weight, 0.425);
-    const R = 0.5 * 0.7 * 1000 * A * Math.pow(speed, 2);
-    const P = R * speed;
+    const R = 0.5 * 0.7 * 1000 * A * Math.pow(swimSpeed, 2);
+    const P = R * swimSpeed;
+    strokeTempo = speed / (2 * Math.PI);
 
     document.getElementById("result").innerHTML =
-        `速度: ${speed.toFixed(2)} m/s<br> 抵抗力 R: ${R.toFixed(2)} N<br>パワー P: ${P.toFixed(2)} W<br>ストロークテンポ: ${strokeTempo.toFixed(2)} 回/秒`;
+        `速度: ${swimSpeed.toFixed(2)} m/s<br> 抵抗力 R: ${R.toFixed(2)} N<br>パワー P: ${P.toFixed(2)} W<br>ストロークテンポ: ${strokeTempo.toFixed(2)} 回/秒`;
 }
 
 function init() {
@@ -92,10 +100,8 @@ function init() {
         ctx.stroke();
     }
 
-    function animate(timestamp) {
-        if (!lastTimestamp) lastTimestamp = timestamp;
-        const deltaTime = (timestamp - lastTimestamp) / 1000;
-        lastTimestamp = timestamp;
+    function animate() {
+
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -138,10 +144,7 @@ function init() {
         angle2 += speed;
         angleSum += Math.abs(speed);
 
-        if (angleSum >= Math.PI * 2) {
-            strokeTempo = 1 / deltaTime;
-            angleSum = 0;
-        }
+
 
         requestAnimationFrame(animate);
     }
