@@ -5,11 +5,10 @@ let angle1 = 0;
 let angle2 = Math.PI;
 let leftLegAngle = -Math.PI / 6;
 let rightLegAngle = Math.PI / 6;
-let speed = 0.08;
+let speed = 0.05;
 let leftLegDirection = speed;
 let rightLegDirection = -speed;
 let angleSum = 0;
-let strokeTempo = 0;
 let lastTimestamp = 0;
 
 function changeSpeed(newSpeed) {
@@ -32,7 +31,7 @@ function calculateAndDisplayResults() {
     // ストロークテンポから腕の回転速度を設定
     changeSpeed(strt); // 入力されたストロークテンポから speed を計算
     // 新しいspeedをストロークテンポから計算し、速すぎないように上限を設定
-    speed = Math.min(2 * Math.PI * strt * 0.1, 0.15);
+    speed = 2 * Math.PI / strt / 60;
     leftLegDirection = speed;
     rightLegDirection = -speed;
 
@@ -41,10 +40,9 @@ function calculateAndDisplayResults() {
     const A = 0.20247 * Math.pow(height / 100, 0.725) * Math.pow(weight, 0.425);
     const R = 0.5 * 0.7 * 1000 * A * Math.pow(swimSpeed, 2);
     const P = R * swimSpeed;
-    strokeTempo = speed / (2 * Math.PI);
 
     document.getElementById("result").innerHTML =
-        `速度: ${swimSpeed.toFixed(2)} m/s<br> 抵抗力 R: ${R.toFixed(2)} N<br>パワー P: ${P.toFixed(2)} W<br>ストロークテンポ: ${strokeTempo.toFixed(2)} 回/秒`;
+        `速度: ${swimSpeed.toFixed(2)} m/s<br> 抵抗力 R: ${R.toFixed(2)} N<br>パワー P: ${P.toFixed(2)} W<br>ストロークテンポ: ${strt.toFixed(2)} 回/秒`;
 }
 
 function init() {
