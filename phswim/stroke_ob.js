@@ -10,8 +10,8 @@ backgroundImage.onload = () => {
 };
 
 // プレイヤーの変数
-let faceX = 500;
-let faceY = 100;
+let faceX = 400;
+let faceY = 300;
 let r = 30;
 let angle1 = 0;
 let angle2 = Math.PI;
@@ -22,8 +22,8 @@ let leftLegDirection = speed * 0.8;
 let rightLegDirection = -speed * 0.8;
 
 // 敵キャラクターの変数
-let enemyFaceX = 500;
-let enemyFaceY = 400;
+let enemyFaceX = 400;
+let enemyFaceY = 600;
 let enemyAngle1 = 0;
 let enemyAngle2 = Math.PI;
 let enemyLeftLegAngle = -Math.PI / 6;
