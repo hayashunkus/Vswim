@@ -1,16 +1,16 @@
 let faceX = 500;
 let faceY = 200;
 let r = 30;
-let angle1 = 0; // 腕1の角度
-let angle2 = Math.PI; // 腕2の角度（反対側から開始）
-let leftLegAngle = -Math.PI / 6; // 左足の初期角度
-let rightLegAngle = Math.PI / 6; // 右足の初期角度
-let speed = 0.08; // デフォルトの速度
-let leftLegDirection = speed; // 左足の動く方向（増減）
-let rightLegDirection = -speed; // 右足の動く方向（増減）
-let angleSum = 0; // 腕が動いた角度の合計
-let strokeTempo = 0; // ストロークテンポ（回/秒）
-let lastTimestamp = 0; // 前のフレームのタイムスタンプ
+let angle1 = 0;
+let angle2 = Math.PI;
+let leftLegAngle = -Math.PI / 6;
+let rightLegAngle = Math.PI / 6;
+let speed = 0.08;
+let leftLegDirection = speed;
+let rightLegDirection = -speed;
+let angleSum = 0;
+let strokeTempo = 0;
+let lastTimestamp = 0;
 
 function changeSpeed(newSpeed) {
     speed = newSpeed;
