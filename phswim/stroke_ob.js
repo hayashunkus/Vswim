@@ -1,6 +1,6 @@
 // 背景画像の設定
 const backgroundImage = new Image();
-backgroundImage.src = 'bg.png'; // 画像のパスを設定
+backgroundImage.src = 'bg2.png'; // 画像のパスを設定
 
 let backgroundX = 0;           // 背景画像の描画位置X座標
 const backgroundSpeed = 1;      // 背景のスクロール速度
