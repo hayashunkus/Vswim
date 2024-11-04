@@ -1,3 +1,14 @@
+// 背景画像の設定
+const backgroundImage = new Image();
+backgroundImage.src = 'bg.png'; // 画像のパスを設定
+
+let backgroundX = 0;           // 背景画像の描画位置X座標
+const backgroundSpeed = 1;      // 背景のスクロール速度
+
+backgroundImage.onload = () => {
+    init();
+};
+
 // プレイヤーの変数
 let faceX = 500;
 let faceY = 100;
@@ -11,8 +22,8 @@ let leftLegDirection = speed * 0.8;
 let rightLegDirection = -speed * 0.8;
 
 // 敵キャラクターの変数
-let enemyFaceX = 500; // 敵キャラクターのX位置
-let enemyFaceY = 400; // 敵キャラクターのY位置
+let enemyFaceX = 500;
+let enemyFaceY = 400;
 let enemyAngle1 = 0;
 let enemyAngle2 = Math.PI;
 let enemyLeftLegAngle = -Math.PI / 6;
@@ -70,7 +81,18 @@ function init() {
     }
 
     function animate() {
+        // 背景をスクロールさせる
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        backgroundX -= backgroundSpeed;  // 背景の位置を左に移動
+
+        // 背景画像の描画
+        if (backgroundImage.complete) {
+            ctx.drawImage(backgroundImage, backgroundX, 0, canvas.width, canvas.height);
+            ctx.drawImage(backgroundImage, backgroundX + canvas.width, 0, canvas.width, canvas.height);
+            if (backgroundX <= -canvas.width) {
+                backgroundX = 0; // 画像が完全にスクロールされたらリセット
+            }
+        }
 
         // プレイヤーの描画
         ctx.fillStyle = "red";
@@ -90,7 +112,7 @@ function init() {
         drawLeg(ctx, faceX - 6 * r, faceY, rightLegAngle, true);
 
         // 敵キャラクターの描画
-        ctx.fillStyle = "green"; // 敵キャラクターの顔の色
+        ctx.fillStyle = "green";
         drawArm(ctx, enemyFaceX, enemyFaceY, enemyAngle1, true);
         ctx.beginPath();
         ctx.arc(enemyFaceX, enemyFaceY, r, 0, Math.PI * 2);
@@ -101,9 +123,9 @@ function init() {
         ctx.lineTo(enemyFaceX - 6 * r, enemyFaceY);
         ctx.stroke();
         drawArm(ctx, enemyFaceX, enemyFaceY, enemyAngle2, false);
-        ctx.fillStyle = "purple"; // 敵キャラクターの左足の色
+        ctx.fillStyle = "purple";
         drawLeg(ctx, enemyFaceX - 6 * r, enemyFaceY, enemyLeftLegAngle, false);
-        ctx.fillStyle = "orange"; // 敵キャラクターの右足の色
+        ctx.fillStyle = "orange";
         drawLeg(ctx, enemyFaceX - 6 * r, enemyFaceY, enemyRightLegAngle, true);
 
         // プレイヤーの腕と脚の角度を更新
