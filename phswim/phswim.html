@@ -13,9 +13,9 @@
         <h2>phswim_move</h2>
     </div>
     <div>
-        <button onclick="changeSpeed(0.06)">速度: 1</button>
+        <button onclick="changeSpeed(0.04)">速度: 1</button>
         <button onclick="changeSpeed(0.08)">速度: 2</button>
-        <button onclick="changeSpeed(0.10)">速度: 3</button>
+        <button onclick="changeSpeed(0.12)">速度: 3</button>
     </div>
 
     <p>
@@ -28,15 +28,15 @@
     </p>
     <p>
         <label for="strt">ストロークテンポ　</label>
-        <input type="text" name="strt" id="strt" placeholder="0.5 - 3.0 回/s">
+        <input type="text" name="strt" id="strt" placeholder="0.3 - 2.0 回/s">
     </p>
     <p>
         <label for="strl">ストローク長　　　</label>
-        <input type="text" name="strl" id="strl" placeholder="0.5 - 3.0 m/回">
+        <input type="text" name="strl" id="strl" placeholder="0.3 - 2.0 m/回">
     </p>
 
     <!-- 計算結果を表示するエリア -->
-    <div id="result">速度: 0 m/s<br> 抵抗力 R: 0 N<br>パワー P: 0 W<br>ストロークテンポ: 0 回/s</div>
+    <div id="result">速度: 0 m/s<br> 抵抗力 R: 0 N<br>パワー P: 0 W<br>ストロークテンポ: 0 回/s<br>角速度(speed):0 rad/fps</div>
 
     <!-- 結果出力ボタンを追加 -->
     <button onclick="calculateAndDisplayResults()">結果出力</button>
