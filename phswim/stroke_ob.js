@@ -9,6 +9,42 @@ backgroundImage.onload = () => {
     init();
 };
 
+function changeSpeed(newSpeed) {
+    speed = newSpeed;
+    leftLegDirection = speed * 0.6;
+    rightLegDirection = -speed * 0.6;
+}
+
+function calculateAndDisplayResults() {
+    const height = parseFloat(document.getElementById("high").value) || 0;
+    const weight = parseFloat(document.getElementById("weight").value) || 0;
+    const strl = parseFloat(document.getElementById("strl").value) || 0;
+    const strt = parseFloat(document.getElementById("strt").value) || 0;
+
+    if (height < 120 || height > 220 || weight < 30 || weight > 120 ||
+        strt < 0.3 || strt > 2.0 || strl < 0.3 || strl > 2.0) {
+        document.getElementById("result").innerHTML = "計算できません";
+        return;
+    }
+
+    // ストロークテンポから腕の回転速度を設定
+    speed = 2 * Math.PI * strt / 60; // 秒単位で角速度を設定
+    changeSpeed(speed * 0.4); // 更新した speed を脚の方向にも反映
+    // 速度を計算（ストローク長 × ストロークテンポ）
+    const swimSpeed = strl * strt;
+
+    // ヒトの断面積 A を計算
+    const A = 0.20247 * Math.pow(height / 100, 0.725) * Math.pow(weight, 0.425);
+    // 抵抗力 R を計算　Cd=0.7
+    const R = 0.5 * 0.7 * 1000 * A * Math.pow(swimSpeed, 2);
+
+    // パワー P を計算
+    const P = R * swimSpeed;
+    // 結果表示
+    document.getElementById("result").innerHTML =
+        `速度: ${swimSpeed.toFixed(2)} m/s<br> 抵抗力 R: ${R.toFixed(2)} N<br>パワー P: ${P.toFixed(2)} W<br>ストロークテンポ: ${strt.toFixed(2)} 回/秒<br>角速度（speed）:${speed.toFixed(2)}`;
+}
+
 // プレイヤーの変数
 let faceX = 400;
 let faceY = 300;
