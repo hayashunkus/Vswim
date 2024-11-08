@@ -11,8 +11,8 @@ backgroundImage.onload = () => {
 
 function changeSpeed(newSpeed) {
     speed = newSpeed;
-    leftLegDirection = speed * 0.6;
-    rightLegDirection = -speed * 0.6;
+    leftLegDirection = speed * 0.6; //補正
+    rightLegDirection = -speed * 0.6; //補正
 }
 
 function calculateAndDisplayResults() {
