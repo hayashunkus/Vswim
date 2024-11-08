@@ -45,6 +45,35 @@ function calculateAndDisplayResults() {
         `速度: ${swimSpeed.toFixed(2)} m/s<br> 抵抗力 R: ${R.toFixed(2)} N<br>パワー P: ${P.toFixed(2)} W<br>ストロークテンポ: ${strt.toFixed(2)} 回/秒<br>角速度（speed）:${speed.toFixed(2)}`;
 }
 
+function moveForward(distance) {
+    faceX += distance; // distance ピクセル分右に移動
+}
+
+function resetAnimation() {
+    faceX = 400; // 初期位置
+    faceY = 300;
+    angle1 = 0;
+    angle2 = Math.PI;
+    leftLegAngle = -Math.PI / 8;
+    rightLegAngle = Math.PI / 8;
+    speed = 0.05;
+    leftLegDirection = speed * 0.8;
+    rightLegDirection = -speed * 0.8;
+    angleSum = 0;
+
+    // 結果表示のリセット
+    document.getElementById("result").innerHTML =
+        `速度: 0 m/s<br> 抵抗力 R: 0 N<br>パワー P: 0 W<br>ストロークテンポ: 0 回/s<br>角速度(speed): 0 rad/fps`;
+    // 入力フォームをリセット
+    document.getElementById("high").value = "";   // 身長をリセット
+    document.getElementById("weight").value = ""; // 体重をリセット
+    document.getElementById("strt").value = "";   // ストロークテンポをリセット
+    document.getElementById("strl").value = "";   // ストローク長をリセット
+
+}
+
+
+
 // プレイヤーの変数
 let faceX = 400;
 let faceY = 300;
