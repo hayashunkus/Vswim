@@ -151,14 +151,19 @@
         // プレイヤーのポジション
         var spX = 50;
         var spY = 450;
+        var playerReachedEnd = false; // プレイヤーが右端に到達したかどうかのフラグ
+        var playerSpeed = 0.4; // プレイヤーの移動速度
 
         function moveSPlayer(deltaTime) {
             if (spX < 1150) {
-                spX += playerSpeed * deltaTime * 60;  // フレームごとの時間差を補正して移動速度を安定化
+                spX += playerSpeed * deltaTime * 60; // フレームごとの時間差を補正して移動速度を安定化
             } else if (!playerReachedEnd) {
                 playerReachedEnd = true; // プレイヤーが右端に到達したらフラグを立てる
                 playerEndTime = performance.now(); // プレイヤーの到達時刻を記録
                 displayTimes(); // タイムを表示
+
+                // オブジェクトのスピードを1.5倍にする
+                objectSpeed *= 1.5;
             }
 
             drawImgC(1, spX, spY); // プレイヤーを描画
@@ -168,6 +173,7 @@
         var soX = 50;
         var soY = 550;
         var objectSpeed = 0.5;
+        var objectReachedEnd = false; // オブジェクトが右端に到達したかどうかのフラグ
 
         // オブジェクトの移動
         function moveSObject(deltaTime) {
@@ -181,6 +187,7 @@
 
             drawImgC(2, soX, soY); // オブジェクトを描画
         }
+
 
         // 四角形を描画する（プレイヤーの上に）
         function drawRectangles() {
