@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stopTimer</title>
+</head>
+
+
+
+<script>
+    let timerId = NaN;
+    let count = 0;
+    function startTimer() {
+        clearInterval(timerId)
+        timerId = setInterval(tick, 10);
+    }
+    function stopTimer() {
+        clearInterval(timerId);
+    }
+    function tick() {
+        count += 0.01;
+        document.getElementById("counter").textContent = count.toFixed(2);
+    }
+    function reset() {
+        clearInterval(timerId); // タイマーを止める
+        count = 0; // カウントをリセット
+        document.getElementById("counter").textContent = count.toFixed(2); // リセットされた値を表示
+    }
+
+
+</script>
+
+
+<body>
+    <button onclick="startTimer()">スタート</button>
+    <button onclick="stopTimer()">ストップ</button>
+    <button onclick="reset()">リセット</button>
+    <h1 id="counter">0.00</h1>
+</body>
+
+
+</html>
