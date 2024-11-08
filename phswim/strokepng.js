@@ -32,7 +32,8 @@ function calculateAndDisplayResults() {
     changeSpeed(speed * 0.4); // 更新した speed を脚の方向にも反映
     // 速度を計算（ストローク長 × ストロークテンポ）
     const swimSpeed = strl * strt;
-
+    //50mのおおよそのタイムを出力
+    const Speed50 = 50 / swimSpeed;
     // ヒトの断面積 A を計算
     const A = 0.20247 * Math.pow(height / 100, 0.725) * Math.pow(weight, 0.425);
     // 抵抗力 R を計算　Cd=0.7
@@ -42,7 +43,7 @@ function calculateAndDisplayResults() {
     const P = R * swimSpeed;
     // 結果表示
     document.getElementById("result").innerHTML =
-        `速度: ${swimSpeed.toFixed(2)} m/s<br> 抵抗力 R: ${R.toFixed(2)} N<br>パワー P: ${P.toFixed(2)} W<br>ストロークテンポ: ${strt.toFixed(2)} 回/秒<br>角速度（speed）:${speed.toFixed(2)}`;
+        `速度: ${swimSpeed.toFixed(2)} m/s<br> 50m time: ${Speed50.toFixed(2)}s <br> 抵抗力 R: ${R.toFixed(2)} N<br>パワー P: ${P.toFixed(2)} W<br>ストロークテンポ: ${strt.toFixed(2)} 回/秒<br>角速度（speed）:${speed.toFixed(2)}`;
 }
 
 function moveForward(distance) {
@@ -107,7 +108,23 @@ function init() {
     // 顔画像のロード
     const faceImage = new Image();
     faceImage.src = "nika.png"; // 顔の画像ファイル名（同じディレクトリに配置してください）
+    faceImage.onerror = function () {
+        console.error("画像のロードに失敗しました: ", faceImage.src);
+    };
+    function drawCircularImage(img, x, y, radius) {
+        // 円形クリッピングを設定
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.clip();
 
+        // 円形内に画像を描画
+        const size = radius * 2;
+        ctx.drawImage(img, x - radius, y - radius, size, size);
+
+        // クリッピング解除
+        ctx.restore();
+    }
     function drawArm(ctx, x, y, angle, isLeft) {
         const shoulderX = x - 5 / 3 * r;
         const shoulderY = y;
@@ -161,15 +178,13 @@ function init() {
                 backgroundX = 0; // 画像が完全にスクロールされたらリセット
             }
         }
-        // 顔画像を描画
-        if (faceImage.complete) {
-            // 顔画像のサイズと位置を調整
-            const imageWidth = 60; // 画像の横幅
-            const imageHeight = 60; // 画像の高さ
-            ctx.drawImage(faceImage, faceX - imageWidth / 2, faceY - imageHeight / 2, imageWidth, imageHeight);
+        // 顔画像を円形に描画
+        if (faceImage.complete && faceImage.naturalWidth > 0) {
+            const radius = 30; // 円の半径
+            drawCircularImage(faceImage, faceX, faceY, radius);
         } else {
-            // デバッグ用に円を描画（画像がロードされる前の代替）
-            ctx.fillStyle = "red";
+            // 画像がロードされていない場合の代替描画
+            ctx.fillStyle = "black";
             ctx.beginPath();
             ctx.arc(faceX, faceY, 30, 0, Math.PI * 2);
             ctx.fill();

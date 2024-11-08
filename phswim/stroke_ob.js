@@ -32,7 +32,8 @@ function calculateAndDisplayResults() {
     changeSpeed(speed * 0.4); // 更新した speed を脚の方向にも反映
     // 速度を計算（ストローク長 × ストロークテンポ）
     const swimSpeed = strl * strt;
-
+    //50mのおおよそのタイムを出力
+    const Speed50 = 50 / swimSpeed;
     // ヒトの断面積 A を計算
     const A = 0.20247 * Math.pow(height / 100, 0.725) * Math.pow(weight, 0.425);
     // 抵抗力 R を計算　Cd=0.7
@@ -42,7 +43,7 @@ function calculateAndDisplayResults() {
     const P = R * swimSpeed;
     // 結果表示
     document.getElementById("result").innerHTML =
-        `速度: ${swimSpeed.toFixed(2)} m/s<br> 抵抗力 R: ${R.toFixed(2)} N<br>パワー P: ${P.toFixed(2)} W<br>ストロークテンポ: ${strt.toFixed(2)} 回/秒<br>角速度（speed）:${speed.toFixed(2)}`;
+        `速度: ${swimSpeed.toFixed(2)} m/s<br> 50m time: ${Speed50.toFixed(2)}s <br> 抵抗力 R: ${R.toFixed(2)} N<br>パワー P: ${P.toFixed(2)} W<br>ストロークテンポ: ${strt.toFixed(2)} 回/秒<br>角速度（speed）:${speed.toFixed(2)}`;
 }
 
 function moveForward(distance) {
