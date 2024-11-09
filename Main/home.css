@@ -25,7 +25,6 @@ h1 {
     position: absolute;
     font-size: 3rem;
     color: rgba(255, 255, 255, 0.8);
-    animation: moveText 5s linear infinite;
     white-space: nowrap;
     z-index: 0;
     /* テキストをボタンより後ろに表示 */
@@ -35,42 +34,6 @@ h1 {
 @keyframes moveText {
     0% {
         top: -10%;
-        left: 110%;
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-    100% {
-        top: 110%;
-        left: -10%;
-        opacity: 0;
-    }
-}
-
-@keyframes moveText2 {
-    0% {
-        top: -20%;
-        left: 90%;
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-    100% {
-        top: 120%;
-        left: -20%;
-        opacity: 0;
-    }
-}
-
-@keyframes moveText3 {
-    0% {
-        top: -5%;
         left: 100%;
         opacity: 1;
     }
@@ -80,17 +43,16 @@ h1 {
     }
 
     100% {
-        top: 105%;
-        left: -5%;
+        top: 110%;
+        left: 0%;
         opacity: 0;
     }
-
 }
 
-@keyframes moveText4 {
+@keyframes moveText2 {
     0% {
-        top: -30%;
-        left: 130%;
+        top: -10%;
+        left: 30%;
         opacity: 1;
     }
 
@@ -99,16 +61,52 @@ h1 {
     }
 
     100% {
-        top: 130%;
-        left: -30%;
+        top: 110%;
+        left: -70%;
+        opacity: 0;
+    }
+}
+
+@keyframes moveText3 {
+    0% {
+        top: -10%;
+        left: 50%;
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        top: 110%;
+        left: -50%;
+        opacity: 0;
+    }
+}
+
+@keyframes moveText4 {
+    0% {
+        top: -10%;
+        left: 80%;
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        top: 110%;
+        left: -20%;
         opacity: 0;
     }
 }
 
 @keyframes moveText5 {
     0% {
-        top: -35%;
-        left: 135%;
+        top: -10%;
+        left: 120%;
         opacity: 1;
     }
 
@@ -117,16 +115,16 @@ h1 {
     }
 
     100% {
-        top: 135%;
-        left: -35%;
+        top: 110%;
+        left: 20%;
         opacity: 0;
     }
 }
 
 @keyframes moveText6 {
     0% {
-        top: -140%;
-        left: 40%;
+        top: -10%;
+        left: 140%;
         opacity: 1;
     }
 
@@ -135,8 +133,8 @@ h1 {
     }
 
     100% {
-        top: 140%;
-        left: -40%;
+        top: 110%;
+        left: 40%;
         opacity: 0;
     }
 }
