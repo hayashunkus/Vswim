@@ -16,6 +16,7 @@
             background-color: #8bb8e6;
             margin: 0;
             flex-direction: column;
+            overflow: hidden;
         }
 
         h1 {
@@ -26,6 +27,128 @@
 
         .btn-group {
             margin-top: 20px;
+            z-index: 1;
+            /* ボタンをテキストより前面に表示 */
+        }
+
+        .moving-text {
+            position: absolute;
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+            animation: moveText 5s linear infinite;
+            white-space: nowrap;
+            z-index: 0;
+            /* テキストをボタンより後ろに表示 */
+        }
+
+        /* 複数のアニメーションを定義 */
+        @keyframes moveText {
+            0% {
+                top: -10%;
+                left: 110%;
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 110%;
+                left: -10%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes moveText2 {
+            0% {
+                top: -20%;
+                left: 90%;
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 120%;
+                left: -20%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes moveText3 {
+            0% {
+                top: -5%;
+                left: 100%;
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 105%;
+                left: -5%;
+                opacity: 0;
+            }
+
+        }
+
+        @keyframes moveText4 {
+            0% {
+                top: -30%;
+                left: 130%;
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 130%;
+                left: -30%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes moveText5 {
+            0% {
+                top: -35%;
+                left: 135%;
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 135%;
+                left: -35%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes moveText6 {
+            0% {
+                top: -40%;
+                left: 140%;
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 140%;
+                left: -40%;
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -37,6 +160,11 @@
         <button class="btn btn-primary" onclick="location.href='choice.html'">進む</button>
         <button class="btn btn-secondary" onclick="location.href='menu.html'">メニュー</button>
     </div>
+
+    <!-- 複数のアニメーションテキスト -->
+    <div class="moving-text" style="animation: moveText 5s linear infinite;">DIVE</div>
+    <div class="moving-text" style="animation: moveText2 6s linear infinite;">DIVE</div>
+    <div class="moving-text" style="animation: moveText3 7s linear infinite;">DIVE</div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
