@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pingmove3 with Countdown and Rectangles</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
         #startButton,
         #resetButton {
@@ -52,6 +50,31 @@
             font-size: 24px;
             color: red;
         }
+
+        /* 戻るボタンのスタイル */
+        #backButton {
+            position: fixed;
+            /* 画面の左上に固定表示 */
+            top: 10px;
+            right: 50px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            /* ボタンの背景色（青） */
+            color: white;
+            /* テキスト色 */
+            border: none;
+            border-radius: 5px;
+            /* ボタンの角を丸くする */
+            cursor: pointer;
+            z-index: 1000;
+            /* ボタンを最前面に表示 */
+        }
+
+        #backButton:hover {
+            background-color: #0056b3;
+            /* ホバー時の背景色を濃く */
+        }
     </style>
 </head>
 
@@ -61,6 +84,8 @@
     <canvas id="canvas" style="position:absolute; top:0; right:0; bottom:0; left:0; margin:auto;"></canvas>
     <button id="startButton" onclick="startGame()">Start</button>
     <button id="resetButton" onclick="resetGame()" disabled>Reset</button> <!-- リセットボタン -->
+    <!-- 戻るボタン -->
+    <button id="backButton" onclick="navigateBack()">戻る</button>
     <div id="times"></div> <!-- タイムを表示する場所 -->
     <div id="countdown"></div> <!-- カウントダウンを表示する場所 -->
 
@@ -285,6 +310,10 @@
         // メインループの開始
         setup();
         mainloop();
+        // ボタンをクリックしたときに画面遷移
+        function navigateBack() {
+            window.location.href = "choice.html"; // 遷移先のHTMLファイル名を指定
+        }
     </script>
 </body>
 
