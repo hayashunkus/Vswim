@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pingmove3 with Countdown and Rectangles</title>
+    <title>競泳ダービー</title>
     <style>
         #startButton,
         #resetButton {
@@ -41,15 +41,6 @@
             font-size: 18px;
             color: black;
         }
-
-        #countdown {
-            position: absolute;
-            top: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 24px;
-            color: red;
-        }
     </style>
 </head>
 
@@ -59,7 +50,7 @@
     <button id="startButton" onclick="startGame()">Start</button>
     <button id="resetButton" onclick="resetGame()" disabled>Reset</button> <!-- リセットボタン -->
     <div id="times"></div> <!-- タイムを表示する場所 -->
-    <div id="countdown"></div> <!-- カウントダウンを表示する場所 -->
+
 
     <script src="WWS.js"></script>
 
@@ -71,23 +62,15 @@
         // ゲーム開始フラグ
         var gameStarted = false;
 
-        // 四角形のカウント
-        var rectangleCount = 0;
 
-        // キーボード関連
-        var spacePressCount = 0; // スペースキーが押された回数
-        var maxRectangles = 5; // 最大で表示する四角形の数
-        var playerSpeed = 0.4; // プレイヤーのスピード
-        var speedBoost = 4; // プレイヤーのスピードを倍にするための係数
 
-        // カウントダウン関連
-        var countdown = 3;
-        var countdownInterval;
+
+
 
         // 起動時の処理
         function setup() {
             canvasSize(1200, 600);
-            loadImg(0, "bg.png");
+            loadImg(0, "poolsc.png");
             loadImg(1, "swimer_pr.png");
             loadImg(2, "swimer_obj.png");
         }
@@ -189,33 +172,9 @@
         }
 
 
-        // 四角形を描画する（プレイヤーの上に）
-        function drawRectangles() {
-            for (let i = 0; i < rectangleCount; i++) {
-                fRect(spX - 20 + i * 30, spY - 70, 20, 50, colorRGB(20, 200, 20));  // プレイヤーの上に四角形を描画
-            }
-        }
 
-        // カウントダウンを表示する
-        function displayCountdown() {
-            document.getElementById("countdown").innerText = countdown;
-        }
 
-        // カウントダウンを開始する
-        function startCountdown() {
-            countdown = 3;
-            displayCountdown();
 
-            countdownInterval = setInterval(function () {
-                countdown--;
-                displayCountdown();
-
-                if (countdown <= 0) {
-                    clearInterval(countdownInterval); // カウントダウン終了
-                    window.addEventListener("keydown", handleKeyPress); // スペースキーの入力を再度受け付ける
-                }
-            }, 1000);
-        }
 
         // ゲーム開始処理
         function startGame() {
@@ -235,21 +194,7 @@
             startCountdown(); // カウントダウンを開始
         }
 
-        // キー入力処理
-        function handleKeyPress(event) {
-            if (event.code === "Space" && countdown === 0) {
-                spacePressCount++;
-                if (spacePressCount === 15 && rectangleCount < maxRectangles) {
-                    rectangleCount++; // 15回押されたら四角形を増やす
-                    spacePressCount = 0; // カウントをリセット
-                    startCountdown(); // 新しいカウントダウンを開始
-                }
-            }
 
-            if (event.code === "Enter" && rectangleCount === 5) {
-                playerSpeed *= speedBoost; // スピードを2倍にする
-            }
-        }
 
         // タイムを表示する
         function displayTimes() {
@@ -272,8 +217,6 @@
             gameStarted = false;
 
             document.getElementById("times").innerText = "";
-            rectangleCount = 0; // 四角形をリセット
-            document.getElementById("countdown").innerText = ""; // カウントダウンをクリア
 
             document.getElementById("startButton").disabled = false;
             document.getElementById("resetButton").disabled = true;
