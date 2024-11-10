@@ -52,7 +52,7 @@ function moveForward(distance) {
 
 function resetAnimation() {
     faceX = 400; // 初期位置
-    faceY = 300;
+    faceY = 250;
     angle1 = 0;
     angle2 = Math.PI;
     leftLegAngle = -Math.PI / 8;
@@ -77,7 +77,7 @@ function resetAnimation() {
 
 // プレイヤーの変数
 let faceX = 400;
-let faceY = 300;
+let faceY = 250;
 let r = 30;
 let angle1 = 0;
 let angle2 = Math.PI;
@@ -89,7 +89,7 @@ let rightLegDirection = -speed * 0.8;
 
 // 敵キャラクターの変数
 let enemyFaceX = 400;
-let enemyFaceY = 600;
+let enemyFaceY = 450;
 let enemyAngle1 = 0;
 let enemyAngle2 = Math.PI;
 let enemyLeftLegAngle = -Math.PI / 6;
