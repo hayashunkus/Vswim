@@ -11,15 +11,30 @@
         body {
             padding: 20px;
             text-align: center;
+            background-image: url('bghome.png');
+            /* 背景画像を指定 */
+            background-size: cover;
+            /* 画面全体にフィット */
+            background-repeat: no-repeat;
+            /* 繰り返しを防止 */
+            background-position: center;
+            /* 中央に配置 */
+        }
+
+        .bg {
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .h2-container {
             display: flex;
             align-items: center;
             margin-bottom: 50px;
-            /* 下に持ってくる */
             margin-left: 100px;
-            /* 左から右に移動 */
         }
 
         h2 {
@@ -44,20 +59,26 @@
             </div>
         </div>
     </nav>
+    <div class="content">
+        <div class="bg">
+            <h1>本日のお品書き‼</h1>
 
-    <h1>本日のお品書き‼</h1>
+            <div class="h2-container">
+                <h2>●V水泳ダービー</h2>
+                <button class="btn btn-primary">詳細</button>
+            </div>
+            <div class="h2-container">
+                <h2>●連打ダッシュ</h2>
+                <button class="btn btn-primary">詳細</button>
+            </div>
+            <div class="h2-container">
+                <h2>●ストロークシミュレーション</h2>
+                <a href="C:/Users/hayas/OneDrive%20-%20NITech/koudaisai/Vswim/phswim/phswimpng.html"
+                    class="btn btn-primary">詳細</a> <!-- リンク先を指定 -->
+            </div>
 
-    <div class="h2-container">
-        <h2>●V水泳ダービー</h2>
-        <button class="btn btn-primary">詳細</button>
-    </div>
-    <div class="h2-container">
-        <h2>●連打ダッシュ</h2>
-        <button class="btn btn-primary">詳細</button>
-    </div>
-    <div class="h2-container">
-        <h2>●ストロークシミュレーション</h2>
-        <button class="btn btn-primary">詳細</button>
+
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
