@@ -1,3 +1,17 @@
+// 初期設定関数
+function setup() {
+    canvasSize(1200, 600); // キャンバスサイズを設定
+    loadImg(0, "poolsc.png"); // 背景画像のロード
+    loadImg(1, "swimer_pr.png"); // プレイヤー画像のロード
+    loadImg(2, "swimer_obj.png"); // オブジェクト画像のロード
+}
+
+// プレイヤーとオブジェクトの移動
+var spX = 50, spY = 320;
+var soX = 50, soY = 420;
+var playerReachedEnd = false;
+var objectReachedEnd = false;
+var gameStarted = false;
 
 // タイム関連の変数
 var playerStartTime, objectStartTime; // スタート時刻
@@ -9,23 +23,18 @@ var gameStarted = false;
 // 四角形のカウント
 var rectangleCount = 0;
 
-// キーボード関連
-var spacePressCount = 0; // スペースキーが押された回数
-var maxRectangles = 5; // 最大で表示する四角形の数
-var playerSpeed = 0.4; // プレイヤーのスピード
-var speedBoost = 4; // プレイヤーのスピードを倍にするための係数
 
 // カウントダウン関連
 var countdown = 3;
 var countdownInterval;
 
-// 起動時の処理
-function setup() {
-    canvasSize(1200, 600);
-    loadImg(0, "poolsc.png");
-    loadImg(1, "swimer_pr.png");
-    loadImg(2, "swimer_obj.png");
-}
+
+// 単振動関連の変数
+var playerSpeed = 0.5; // プレイヤーの基本移動速度
+var objectSpeed = 0.5; // オブジェクトの基本移動速度
+var playerOscillationFreq = Math.random() * 2 + 1; // ランダムな周期 (1~3)
+var objectOscillationFreq = Math.random() * 2 + 1; // ランダムな周期 (1~3)
+var oscillationAmplitude = 50; // 振幅
 
 // プレイヤーとオブジェクトがスクロールした距離を追跡
 var totalScrollDistance = 0;
@@ -83,15 +92,11 @@ function drowBG(spd) {
     }
 }
 
-// プレイヤーのポジション
-var spX = 50;
-var spY = 320;
-var playerReachedEnd = false; // プレイヤーが右端に到達したかどうかのフラグ
-var playerSpeed = 0.4; // プレイヤーの移動速度
-
+//プレイヤーの移動
 function moveSPlayer(deltaTime) {
     if (spX < 1150) {
         spX += playerSpeed * deltaTime * 60; // フレームごとの時間差を補正して移動速度を安定化
+        //spX += oscillationAmplitude * Math.sin(playerOscillationFreq * currentTime / 1000); // 単振動
     } else if (!playerReachedEnd) {
         playerReachedEnd = true; // プレイヤーが右端に到達したらフラグを立てる
         playerEndTime = performance.now(); // プレイヤーの到達時刻を記録
@@ -104,11 +109,6 @@ function moveSPlayer(deltaTime) {
     drawImgC(1, spX, spY); // プレイヤーを描画
 }
 
-// オブジェクトのポジション
-var soX = 50;
-var soY = 420;
-var objectSpeed = 0.5;
-var objectReachedEnd = false; // オブジェクトが右端に到達したかどうかのフラグ
 
 // オブジェクトの移動
 function moveSObject(deltaTime) {
@@ -170,21 +170,6 @@ function startGame() {
     startCountdown(); // カウントダウンを開始
 }
 
-// キー入力処理
-function handleKeyPress(event) {
-    if (event.code === "Space" && countdown === 0) {
-        spacePressCount++;
-        if (spacePressCount === 15 && rectangleCount < maxRectangles) {
-            rectangleCount++; // 15回押されたら四角形を増やす
-            spacePressCount = 0; // カウントをリセット
-            startCountdown(); // 新しいカウントダウンを開始
-        }
-    }
-
-    if (event.code === "Enter" && rectangleCount === 5) {
-        playerSpeed *= speedBoost; // スピードを2倍にする
-    }
-}
 
 // タイムを表示する
 function displayTimes() {
