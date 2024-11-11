@@ -1,44 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>stopTimer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        body {
+            margin: 0;
+
+            /* 内容を上寄せ */
+            height: 100vh;
+            flex-direction: column;
+            background-color: #f8f9fa;
+            /* ページの背景色を淡色に */
+        }
+
+        .stopwatch-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            /* 白背景で区別 */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* 軽い影をつけて浮き上がりを演出 */
+        }
+
+
+        #clock-face {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 8px solid #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        #needle {
+            position: absolute;
+            width: 4px;
+            height: 80px;
+            background-color: red;
+            top: 15px;
+            /* 針を上に移動させる */
+            transform-origin: 50% 100%;
+            /* 回転軸を調整 */
+            transform: rotate(0deg);
+        }
+
+        #counter {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+
+        .button-group button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+        }
+    </style>
 </head>
 
-
-
-<script>
-    let timerId = NaN;
-    let count = 0;
-    function startTimer() {
-        clearInterval(timerId)
-        timerId = setInterval(tick, 10);
-    }
-    function stopTimer() {
-        clearInterval(timerId);
-    }
-    function tick() {
-        count += 0.01;
-        document.getElementById("counter").textContent = count.toFixed(2);
-    }
-    function reset() {
-        clearInterval(timerId); // タイマーを止める
-        count = 0; // カウントをリセット
-        document.getElementById("counter").textContent = count.toFixed(2); // リセットされた値を表示
-    }
-
-
-</script>
-
-
 <body>
-    <button onclick="startTimer()">スタート</button>
-    <button onclick="stopTimer()">ストップ</button>
-    <button onclick="reset()">リセット</button>
-    <h1 id="counter">0.00</h1>
-</body>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">名工大V水泳</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#expandme"
+            aria-controls="expandme" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="expandme">
+            <div class="navbar-nav">
+                <a href="home.html" class="nav-item nav-link">ホーム</a>
+                <a href="menu.html" class="nav-item nav-link">メニュー</a>
+            </div>
+        </div>
+    </nav>
+    <div class="stopwatch-container">
+        <h1 id="counter">0.00</h1>
+        <div id="clock-face">
+            <div id="needle"></div>
+        </div>
+        <div class="button-group">
+            <button onclick="startTimer()">スタート</button>
+            <button onclick="stopTimer()">ストップ</button>
+            <button onclick="reset()">リセット</button>
+        </div>
+    </div>
+    <script>
+        let timerId = NaN;
+        let count = 0;
+        let needleAngle = 0;
+        const needle = document.getElementById("needle");
+        const counter = document.getElementById("counter");
+        const clockFace = document.getElementById("clock-face");
 
+        function startTimer() {
+            clearInterval(timerId);
+            timerId = setInterval(tick, 10);
+        }
+
+        function stopTimer() {
+            clearInterval(timerId);
+            showElements(); // 表示を戻す
+        }
+
+        function tick() {
+            count += 0.01;
+            document.getElementById("counter").textContent = count.toFixed(2);
+
+            // 針を1秒ごとに一周させる計算
+            needleAngle = (count % 1) * 360; // 1秒ごとに360度回転
+            needle.style.transform = `rotate(${needleAngle}deg)`;
+
+            // 4秒経過したら針とカウンターを非表示にする
+            if (count >= 4.00) {
+                hideElements();
+            }
+        }
+
+        function reset() {
+            clearInterval(timerId); // タイマーを止める
+            count = 0; // カウントをリセット
+            needleAngle = 0; // 針の角度をリセット
+            document.getElementById("counter").textContent = count.toFixed(2); // リセットされた値を表示
+            needle.style.transform = `rotate(0deg)`; // 針を初期位置に戻す
+            showElements(); // 表示を戻す
+        }
+
+        function hideElements() {
+            needle.style.display = "none";
+            counter.style.display = "none";
+        }
+
+        function showElements() {
+            needle.style.display = "block";
+            counter.style.display = "block";
+
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
 
 </html>

@@ -4,20 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roulette with Limited Spins</title>
+    <title>ルーレット</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
         body {
+            margin: 0;
             display: flex;
             flex-direction: column;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            font-family: Arial, sans-serif;
+            flex-grow: 1;
         }
 
         .roulette-container {
             position: relative;
             width: 300px;
             height: 300px;
-            margin: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 2px solid #007bff;
+            border-radius: 50%;
+            background-color: #ffffff;
         }
 
         .roulette {
@@ -38,20 +55,50 @@
             transform-origin: bottom;
             transform: translateX(-50%);
         }
+
+        .button-group {
+            margin-top: 20px;
+        }
+
+        .button-group button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="roulette-container">
-        <div class="roulette" id="roulette1"></div>
-        <div class="needle" id="needle"></div>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">名工大V水泳</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#expandme"
+            aria-controls="expandme" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="expandme">
+            <div class="navbar-nav">
+                <a href="home.html" class="nav-item nav-link">ホーム</a>
+                <a href="menu.html" class="nav-item nav-link">メニュー</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="roulette-container">
+            <div class="roulette" id="roulette1"></div>
+            <div class="needle" id="needle"></div>
+        </div>
+        <div class="button-group">
+            <button id="spinButton">ルーレットをまわす</button>
+            <button id="resetButton">リセット</button>
+        </div>
     </div>
-    <button id="spinButton">Spin Roulette</button>
 
     <script>
         let clickCount = 0;
         const maxClicks = 4;
 
+        // ルーレットを回す処理
         document.getElementById('spinButton').addEventListener('click', function () {
             if (clickCount < maxClicks) {
                 clickCount++;
@@ -61,12 +108,30 @@
                 roulette.style.transform = `rotate(${randomDegree + 360 * 10}deg)`; // Spin at least 10 full rotations
 
                 if (clickCount >= maxClicks) {
-                    this.disabled = true; // Disable the button after 4 clicks
+                    this.disabled = true; // Disable the spin button after 4 clicks
                     alert('これ以上回すことはできません.');
                 }
             }
         });
+
+        // リセット処理
+        document.getElementById('resetButton').addEventListener('click', function () {
+            clickCount = 0;
+            const roulette = document.getElementById('roulette1');
+            roulette.style.transition = 'none'; // Transitionを一時的に無効化
+            roulette.style.transform = 'rotate(0deg)'; // 初期位置に戻す
+            document.getElementById('spinButton').disabled = false; // Spinボタンを有効化
+        });
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
