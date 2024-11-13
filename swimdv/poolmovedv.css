@@ -1,0 +1,35 @@
+#startButton,
+#resetButton {
+    position: absolute;
+    top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#startButton {
+    left: 40%;
+    transform: translateX(-40%);
+}
+
+#resetButton {
+    left: 60%;
+    transform: translateX(-60%);
+}
+
+#resetButton:disabled,
+#startButton:disabled {
+    background-color: #cccccc;
+}
+
+#times {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    color: rgb(224, 189, 189);
+}

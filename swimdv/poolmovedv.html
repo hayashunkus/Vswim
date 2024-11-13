@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>競泳ダービー</title>
+    <link rel="stylesheet" href="poolmovedv.css">
+</head>
+
+<body>
+    <!-- キャンバスとスタートボタン -->
+    <canvas id="canvas" style="position:absolute; top:0; right:0; bottom:0; left:0; margin:auto;"></canvas>
+    <button id="startButton" onclick="startGame()">Start</button>
+    <button id="resetButton" onclick="resetGame()" disabled>Reset</button> <!-- リセットボタン -->
+    <div id="times"></div> <!-- タイムを表示する場所 -->
+    <div id="countdown"></div> <!-- カウントダウンを表示する場所 -->
+
+    <script src="WWS.js"></script>
+    <script src="poolmovedv.js"></script>
+
+
+</body>
+
+</html>
+
+<!--相対速度+プレイヤーの速度に合わせてスクロールとストロークの描画と飛び込みスタートと壁の設置とブーストモードの改良とグラフィックの改善と物理の法則を利用-->
