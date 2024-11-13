@@ -26,8 +26,8 @@
 
         .roulette-container {
             position: relative;
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -49,7 +49,7 @@
             position: absolute;
             top: 0;
             left: 50%;
-            width: 5px;
+            width: 4px;
             height: 50px;
             background: rgb(220, 50, 120);
             transform-origin: bottom;
@@ -82,7 +82,10 @@
             </div>
         </div>
     </nav>
-
+    <h1>Roulette for selecting arm wrestlers</h1>
+    <h2>注）4回まで回せます<br>●オレンジ：vs競泳主任、緑：vs主務、紫：vs会計　です
+        <br>チャレンジは何回でもできます。誰かに勝てたらお菓子（うまい棒）がもらえるよ!!
+    </h2>
     <div class="content">
         <div class="roulette-container">
             <div class="roulette" id="roulette1"></div>
@@ -93,9 +96,7 @@
             <button id="resetButton">リセット</button>
         </div>
     </div>
-    <h3>　　　　　　注）4回まで回せます<br>●オレンジが鈴木、緑が速水、紫が元田です。
 
-    </h3>
 
     <script>
         let clickCount = 0;
@@ -108,14 +109,17 @@
                 const roulette = document.getElementById('roulette1');
                 const randomDegree = Math.floor(Math.random() * 360);
                 roulette.style.transition = 'transform 3s ease-out';
-                roulette.style.transform = `rotate(${randomDegree + 360 * 20}deg)`; // Spin at least 10 full rotations
+                roulette.style.transform = `rotate(${randomDegree + 360 * 20}deg)`; // Spin at least 20 full rotations
 
                 if (clickCount >= maxClicks) {
-                    this.disabled = true; // Disable the spin button after 4 clicks
-                    alert('これ以上回すことはできません.');
+                    setTimeout(() => {
+                        alert('これ以上回すことはできません.');
+                        this.disabled = true; // Disable the spin button after 4 clicks and show alert
+                    }, 3000); // Delay to ensure the alert appears after the spinning ends
                 }
             }
         });
+
 
         // リセット処理
         document.getElementById('resetButton').addEventListener('click', function () {
