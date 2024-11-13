@@ -2,12 +2,12 @@
 function setup() {
     canvasSize(1200, 600); // キャンバスサイズを設定
     loadImg(0, "poolsc.png"); // 背景画像のロード
-    loadImg(1, "swimer_pr.png"); // プレイヤー画像のロード
-    loadImg(2, "swimer_obj.png"); // オブジェクト画像のロード
+    loadImg(1, "motoda1.png"); // プレイヤー画像のロード
+    loadImg(2, "shun1.png"); // オブジェクト画像のロード
 }
 
 // プレイヤーとオブジェクトの移動
-var spX = 50, spY = 320;
+var spX = 50, spY = 330;
 var soX = 50, soY = 420;
 var playerReachedEnd = false;
 var objectReachedEnd = false;
