@@ -4,12 +4,18 @@ function setup() {
     loadImg(0, "poolsc.png"); // 背景画像のロード
     loadImg(1, "motoda1.png"); // キャラクター1の画像ロード
     loadImg(2, "shun1.png"); // キャラクター2の画像ロード
+    loadImg(3, "yoshitaka1.png"); // キャラクター3の画像ロード
+    loadImg(4, "motoda1.png"); // キャラクター4の画像ロード
+    loadImg(5, "shun1.png"); // キャラクター5の画像ロード
 }
 
 // キャラクターオブジェクトの配列
 let characters = [
     { x: 50, y: 145, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 1, reachedEnd: false, startTime: null, endTime: null },
-    { x: 50, y: 195, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 2, reachedEnd: false, startTime: null, endTime: null }
+    { x: 50, y: 195, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 2, reachedEnd: false, startTime: null, endTime: null },
+    { x: 50, y: 250, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 3, reachedEnd: false, startTime: null, endTime: null },
+    { x: 50, y: 325, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 4, reachedEnd: false, startTime: null, endTime: null },
+    { x: 50, y: 420, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 5, reachedEnd: false, startTime: null, endTime: null },
 ];
 
 let gameStarted = false;
