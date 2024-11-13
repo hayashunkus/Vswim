@@ -108,7 +108,7 @@
                 const roulette = document.getElementById('roulette1');
                 const randomDegree = Math.floor(Math.random() * 360);
                 roulette.style.transition = 'transform 3s ease-out';
-                roulette.style.transform = `rotate(${randomDegree + 360 * 10}deg)`; // Spin at least 10 full rotations
+                roulette.style.transform = `rotate(${randomDegree + 360 * 20}deg)`; // Spin at least 10 full rotations
 
                 if (clickCount >= maxClicks) {
                     this.disabled = true; // Disable the spin button after 4 clicks
