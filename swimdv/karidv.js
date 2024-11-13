@@ -2,20 +2,22 @@
 function setup() {
     canvasSize(1200, 600); // キャンバスサイズを設定
     loadImg(0, "poolsc.png"); // 背景画像のロード
-    loadImg(1, "motoda1.png"); // キャラクター1の画像ロード
-    loadImg(2, "shun1.png"); // キャラクター2の画像ロード
-    loadImg(3, "yoshitaka1.png"); // キャラクター3の画像ロード
-    loadImg(4, "motoda1.png"); // キャラクター4の画像ロード
-    loadImg(5, "shun1.png"); // キャラクター5の画像ロード
+    for (let i = 1; i <= 6; i++) {
+        loadImg(i, `motoda${i}.png`); // 修正
+        loadImg(i + 6, `shun${i}.png`); // 修正
+        loadImg(i + 12, `motoda${i}.png`); // 修正
+        loadImg(i + 18, `shun${i}.png`); // 修正
+        loadImg(i + 24, `yoshitaka${i}.png`); // 修正
+    }
 }
 
 // キャラクターオブジェクトの配列
 let characters = [
-    { x: 50, y: 145, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 1, reachedEnd: false, startTime: null, endTime: null },
-    { x: 50, y: 195, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 2, reachedEnd: false, startTime: null, endTime: null },
-    { x: 50, y: 250, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 3, reachedEnd: false, startTime: null, endTime: null },
-    { x: 50, y: 325, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 4, reachedEnd: false, startTime: null, endTime: null },
-    { x: 50, y: 420, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 5, reachedEnd: false, startTime: null, endTime: null },
+    { x: 50, y: 145, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 1, frameIndex: 0, frameDelay: 100, frameTime: 0, reachedEnd: false, startTime: null, endTime: null },
+    { x: 50, y: 195, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 7, frameIndex: 0, frameDelay: 100, frameTime: 0, reachedEnd: false, startTime: null, endTime: null },
+    { x: 50, y: 250, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 13, frameIndex: 0, frameDelay: 100, frameTime: 0, reachedEnd: false, startTime: null, endTime: null },
+    { x: 50, y: 325, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 19, frameIndex: 0, frameDelay: 100, frameTime: 0, reachedEnd: false, startTime: null, endTime: null },
+    { x: 50, y: 420, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 25, frameIndex: 0, frameDelay: 100, frameTime: 0, reachedEnd: false, startTime: null, endTime: null },
 ];
 
 let gameStarted = false;
@@ -43,10 +45,11 @@ function mainloop() {
     if (gameStarted) {
         drowBG(0.2); // 背景を描画
 
-        // キャラクターの移動処理
+        // キャラクターの移動処理とアニメーション更新
         for (let character of characters) {
             moveCharacter(character, deltaTime);
-            drawImgC(character.imgIndex, character.x, character.y); // キャラクターを描画
+            updateCharacterFrame(character, currentTime); // フレーム更新
+            drawImgC(character.imgIndex + character.frameIndex, character.x, character.y); // フレーム画像を描画
         }
 
         displayCountdown(); // カウントダウンを表示
@@ -71,7 +74,7 @@ function drowBG(spd) {
     }
 }
 
-//キャラクターの移動処理
+// キャラクターの移動処理
 function moveCharacter(character, deltaTime) {
     if (character.x < 1150) {
         character.speed += character.acceleration * deltaTime * 20; // 加速度で速度を更新
@@ -88,14 +91,22 @@ function moveCharacter(character, deltaTime) {
         checkGameEnd(); // ゲーム終了判定
     }
 }
+
+// キャラクターのフレームを更新
+function updateCharacterFrame(character, currentTime) {
+    if (currentTime - character.frameTime > character.frameDelay) {
+        character.frameTime = currentTime;
+        character.frameIndex = (character.frameIndex + 1) % 6; // フレーム番号をループ (0～5)
+    }
+}
+
 // ゲーム終了判定
 function checkGameEnd() {
     if (characters.every(char => char.reachedEnd)) {
-        // 両者がゴールした場合、順位とタイムを計算
         let times = characters.map(char => ((char.endTime - char.startTime) / 1000).toFixed(2));
         let ranks = [...characters]
             .sort((a, b) => a.endTime - b.endTime)
-            .map((char, index) => ({ name: `Character ${char.imgIndex}`, rank: index + 1 }));
+            .map((char, index) => ({ name: `Lane ${char.imgIndex % 5}`, rank: index + 1 }));
 
         let results = ranks.map(
             (r, i) => `${r.name} - Rank: ${r.rank}, Time: ${times[i]} seconds`
@@ -122,7 +133,7 @@ function startCountdown() {
 
         if (countdown <= 0) {
             clearInterval(countdownInterval);
-            window.addEventListener("keydown", handleKeyPress);
+            //window.addEventListener("keydown", handleKeyPress);
         }
     }, 1000);
 }
@@ -159,7 +170,6 @@ function resetGame() {
     document.getElementById("startButton").disabled = false;
     document.getElementById("resetButton").disabled = true;
 }
-
 
 // メインループの開始
 setup();
