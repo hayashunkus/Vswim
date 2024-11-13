@@ -10,12 +10,9 @@
     <style>
         body {
             margin: 0;
-
-            /* 内容を上寄せ */
             height: 100vh;
             flex-direction: column;
-            background-color: #f8f9fa;
-            /* ページの背景色を淡色に */
+            background-color: #c7e0fa;
         }
 
         .stopwatch-container {
@@ -26,12 +23,9 @@
             margin-top: 20px;
             padding: 20px;
             background-color: #ffffff;
-            /* 白背景で区別 */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            /* 軽い影をつけて浮き上がりを演出 */
         }
-
 
         #clock-face {
             position: relative;
@@ -51,15 +45,18 @@
             height: 80px;
             background-color: red;
             top: 15px;
-            /* 針を上に移動させる */
             transform-origin: 50% 100%;
-            /* 回転軸を調整 */
             transform: rotate(0deg);
         }
 
         #counter {
             font-size: 2em;
             margin: 20px 0;
+            background-color: #e9ecef;
+            padding: 10px 20px;
+            border-radius: 5px;
+            width: 100px;
+            text-align: center;
         }
 
         .button-group button {
@@ -90,19 +87,36 @@
             <div id="needle"></div>
         </div>
         <div class="button-group">
-            <button onclick="startTimer()">スタート</button>
-            <button onclick="stopTimer()">ストップ</button>
+            <button id="startStopButton" onclick="toggleTimer()">スタート/ストップ</button>
             <button onclick="reset()">リセット</button>
         </div>
     </div>
-    <h2>スタートで開始でストップで止めてください。<br>注）４秒後に数字の表示と針の表示が見えなくなります。</h2>
+    <h2>「スタート/ストップ」ボタンはそれぞれ１回ずつしか押せません。<br>注）４秒後に数字の表示と針の表示が見えなくなります。
+        <br>　10秒チャレンジの誤差-0.1～+0.1でお菓子（ルマンド）がもらえます。<br>　チャレンジは３回だよ。
+    </h2>
     <script>
         let timerId = NaN;
         let count = 0;
         let needleAngle = 0;
+        let isRunning = false;
+        let canStartAgain = true;
         const needle = document.getElementById("needle");
         const counter = document.getElementById("counter");
-        const clockFace = document.getElementById("clock-face");
+        const startStopButton = document.getElementById("startStopButton");
+
+        function toggleTimer() {
+            if (!canStartAgain) return; // ボタンが再度押せないようにする
+
+            if (isRunning) {
+                stopTimer();
+                isRunning = false;
+                canStartAgain = false; // 二度とスタートできないようにする
+                startStopButton.disabled = true; // ボタンを無効化
+            } else {
+                startTimer();
+                isRunning = true;
+            }
+        }
 
         function startTimer() {
             clearInterval(timerId);
@@ -116,36 +130,36 @@
 
         function tick() {
             count += 0.01;
-            document.getElementById("counter").textContent = count.toFixed(2);
+            counter.textContent = count.toFixed(2);
 
-            // 針を1秒ごとに一周させる計算
-            needleAngle = (count % 1) * 360; // 1秒ごとに360度回転
+            needleAngle = (count % 1) * 360;
             needle.style.transform = `rotate(${needleAngle}deg)`;
 
-            // 4秒経過したら針とカウンターを非表示にする
             if (count >= 4.00) {
                 hideElements();
             }
         }
 
         function reset() {
-            clearInterval(timerId); // タイマーを止める
-            count = 0; // カウントをリセット
-            needleAngle = 0; // 針の角度をリセット
-            document.getElementById("counter").textContent = count.toFixed(2); // リセットされた値を表示
-            needle.style.transform = `rotate(0deg)`; // 針を初期位置に戻す
-            showElements(); // 表示を戻す
+            clearInterval(timerId);
+            count = 0;
+            needleAngle = 0;
+            counter.textContent = count.toFixed(2);
+            needle.style.transform = `rotate(0deg)`;
+            showElements();
+            isRunning = false;
+            canStartAgain = true;
+            startStopButton.disabled = false; // ボタンを再び有効化
         }
 
         function hideElements() {
-            needle.style.display = "none";
-            counter.style.display = "none";
+            needle.style.visibility = "hidden";
+            counter.style.visibility = "hidden";
         }
 
         function showElements() {
-            needle.style.display = "block";
-            counter.style.display = "block";
-
+            needle.style.visibility = "visible";
+            counter.style.visibility = "visible";
         }
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
