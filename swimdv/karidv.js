@@ -8,8 +8,8 @@ function setup() {
 
 // キャラクターオブジェクトの配列
 let characters = [
-    { x: 50, y: 330, speed: 0, acceleration: Math.random() * 0.1 + 0.05, imgIndex: 1, reachedEnd: false, startTime: null, endTime: null },
-    { x: 50, y: 420, speed: 0, acceleration: Math.random() * 0.1 + 0.05, imgIndex: 2, reachedEnd: false, startTime: null, endTime: null }
+    { x: 50, y: 145, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 1, reachedEnd: false, startTime: null, endTime: null },
+    { x: 50, y: 195, speed: 0, acceleration: ((Math.random() * 2 - 1)), imgIndex: 2, reachedEnd: false, startTime: null, endTime: null }
 ];
 
 let gameStarted = false;
@@ -18,6 +18,13 @@ let countdownInterval;
 let lastFrameTime = performance.now();
 let totalScrollDistance = 0;
 let stopScroll = false;
+
+// 1秒ごとにキャラクターの加速度を更新
+setInterval(() => {
+    characters.forEach(char => {
+        char.acceleration = Math.random() * 0.6 - 0.1; // -0.1 〜 0.5 に調整
+    });
+}, 1000);
 
 // メインループ
 function mainloop() {
@@ -58,23 +65,37 @@ function drowBG(spd) {
     }
 }
 
-// キャラクターの移動
+//キャラクターの移動処理
 function moveCharacter(character, deltaTime) {
     if (character.x < 1150) {
-        character.speed += character.acceleration * deltaTime * 60; // 加速度を用いて速度を更新
-        character.x += character.speed * deltaTime * 60; // 速度を基に位置を更新
+        character.speed += character.acceleration * deltaTime * 20; // 加速度で速度を更新
+        character.speed *= 0.90; // 減衰を弱める
+        character.speed = Math.min(Math.max(character.speed, 0.5), 6); // 速度を少し高めに調整
+
+        character.x += character.speed * deltaTime * 20; // 移動量を増加
     } else if (!character.reachedEnd) {
         character.reachedEnd = true;
         character.endTime = performance.now();
-        checkGameEnd();
+        if (!stopScroll) {
+            stopScroll = true; // スクロールを止める
+        }
+        checkGameEnd(); // ゲーム終了判定
     }
 }
-
 // ゲーム終了判定
 function checkGameEnd() {
     if (characters.every(char => char.reachedEnd)) {
+        // 両者がゴールした場合、順位とタイムを計算
         let times = characters.map(char => ((char.endTime - char.startTime) / 1000).toFixed(2));
-        document.getElementById("times").innerText = `Times: ${times.join(' seconds, ')} seconds`;
+        let ranks = [...characters]
+            .sort((a, b) => a.endTime - b.endTime)
+            .map((char, index) => ({ name: `Character ${char.imgIndex}`, rank: index + 1 }));
+
+        let results = ranks.map(
+            (r, i) => `${r.name} - Rank: ${r.rank}, Time: ${times[i]} seconds`
+        );
+
+        document.getElementById("times").innerText = results.join('\n');
         document.getElementById("startButton").disabled = false;
     }
 }
@@ -107,8 +128,10 @@ function startGame() {
         char.speed = 0;
         char.reachedEnd = false;
         char.startTime = performance.now();
+        char.endTime = null;
     });
 
+    stopScroll = false; // スクロールを再開可能にする
     gameStarted = true;
     document.getElementById("startButton").disabled = true;
     document.getElementById("resetButton").disabled = false;
@@ -124,11 +147,13 @@ function resetGame() {
         char.reachedEnd = false;
     });
     gameStarted = false;
+    stopScroll = false; // スクロールを再開可能にする
     document.getElementById("times").innerText = "";
     document.getElementById("countdown").innerText = "";
     document.getElementById("startButton").disabled = false;
     document.getElementById("resetButton").disabled = true;
 }
+
 
 // メインループの開始
 setup();
