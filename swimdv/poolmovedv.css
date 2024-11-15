@@ -1,11 +1,24 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+canvas {
+    display: block;
+}
+
+
+
 #startButton,
-#resetButton {
+#resetButton,
+#backButton {
     position: absolute;
     top: 10px;
     padding: 10px 20px;
     font-size: 16px;
     background-color: #4CAF50;
-    color: white;
+    color: rgb(236, 247, 247);
     border: none;
     cursor: pointer;
 }
@@ -20,9 +33,14 @@
     transform: translateX(-60%);
 }
 
+#backButton {
+    left: 80%;
+    transform: translateX(-80%);
+}
+
 #resetButton:disabled,
 #startButton:disabled {
-    background-color: #cccccc;
+    background-color: #f586e3;
 }
 
 #times {
@@ -32,4 +50,36 @@
     transform: translateX(-50%);
     font-size: 18px;
     color: rgb(224, 189, 189);
+}
+
+#backButton:hover {
+    background-color: #7daada;
+    /* ホバー時の背景色を青く */
+}
+
+.lane-label {
+    position: absolute;
+    background-color: rgba(250, 250, 250, 0.8);
+    color: #363617;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    transform: translateX(-50%);
+    opacity: 0;
+    /* 最初は非表示 */
+    transition: opacity 0.5s ease-in-out;
+}
+
+
+@keyframes slideUp {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
