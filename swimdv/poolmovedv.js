@@ -72,24 +72,24 @@ function drowBG(spd) {
     }
 }
 
-// キャラクターの移動処理
+// キャラクターの移動処理を修正
 function moveCharacter(character, deltaTime) {
     if (character.x < 1150) {
         character.speed += character.acceleration * deltaTime * 20; // 加速度で速度を更新
         character.speed *= 0.90; // 減衰を弱める
-        character.speed = Math.min(Math.max(character.speed, 0.5), 6); // 速度を少し高めに調整
+        character.speed = Math.min(Math.max(character.speed, 0.6), 7); // 速度を少し高めに調整
 
-        character.x += character.speed * deltaTime * 20; // 移動量を増加
+        character.x += character.speed * deltaTime * 25; // 移動量を増加
     } else if (!character.reachedEnd) {
         character.reachedEnd = true;
         character.endTime = performance.now();
+        showLabel(character); // 到達したらラベルを表示
         if (!stopScroll) {
             stopScroll = true; // スクロールを止める
         }
         checkGameEnd(); // ゲーム終了判定
     }
 }
-
 // キャラクターのフレームを更新
 function updateCharacterFrame(character, currentTime) {
     if (currentTime - character.frameTime > character.frameDelay) {
@@ -106,13 +106,22 @@ function checkGameEnd() {
             .map((char, index) => ({ name: `レーン ${char.imgIndex % 5}`, rank: index + 1, time: ((char.endTime - char.startTime) / 1000).toFixed(2) }));
 
         let results = ranks.map(
-            r => `${r.name} - Rank: ${r.rank}, Time: ${r.time} seconds`
+            r => ` 順位: ${r.rank}位-${r.name} `
         );
 
-        document.getElementById("times").innerText = results.join('\n');
+        let timesElement = document.getElementById("times");
+        timesElement.innerText = results.join('\n');
+
+        // 背景色とスタイルを設定
+        timesElement.style.backgroundColor = "#161212"; // 黒色
+        timesElement.style.padding = "30px"; // パディング追加
+        timesElement.style.border = "none"; // 初期状態で境界線を非表示
+        timesElement.style.borderRadius = "10px"; // 角を丸める
+
         document.getElementById("startButton").disabled = false;
     }
 }
+
 
 // ゲーム開始処理
 function startGame() {
@@ -130,7 +139,7 @@ function startGame() {
     document.getElementById("resetButton").disabled = false;
 }
 
-// リセット処理
+// リセット処理にラベルのクリアを追加
 function resetGame() {
     characters.forEach(char => {
         char.x = 50;
@@ -143,8 +152,26 @@ function resetGame() {
     document.getElementById("times").innerText = "";
     document.getElementById("startButton").disabled = false;
     document.getElementById("resetButton").disabled = true;
+    labelsContainer.innerHTML = ""; // ラベルをクリア
     drowBG(0); // 背景を初期状態で描画
 }
+// ラベルコンテナ要素を取得
+const labelsContainer = document.getElementById("labels-container");
+
+// キャラクターが右端に到達したときにラベルを表示
+function showLabel(character) {
+    const label = document.createElement("div");
+    label.className = "lane-label";
+    label.innerText = `レーン ${character.imgIndex % 5}-finish`;
+
+    // ラベルを配置
+    label.style.left = `${character.x - 100}px`; // キャラクターのX座標 + 少し右
+    label.style.top = `${character.y}px`; // キャラクターのY座標
+    label.style.opacity = 1; // ラベルを表示
+
+    labelsContainer.appendChild(label);
+}
+
 
 // メインループの開始
 setup();
