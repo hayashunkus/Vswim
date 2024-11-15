@@ -77,9 +77,9 @@ function moveCharacter(character, deltaTime) {
     if (character.x < 1150) {
         character.speed += character.acceleration * deltaTime * 20; // 加速度で速度を更新
         character.speed *= 0.90; // 減衰を弱める
-        character.speed = Math.min(Math.max(character.speed, 0.5), 6); // 速度を少し高めに調整
+        character.speed = Math.min(Math.max(character.speed, 0.6), 7); // 速度を少し高めに調整
 
-        character.x += character.speed * deltaTime * 20; // 移動量を増加
+        character.x += character.speed * deltaTime * 25; // 移動量を増加
     } else if (!character.reachedEnd) {
         character.reachedEnd = true;
         character.endTime = performance.now();
@@ -162,10 +162,10 @@ const labelsContainer = document.getElementById("labels-container");
 function showLabel(character) {
     const label = document.createElement("div");
     label.className = "lane-label";
-    label.innerText = `Lane ${character.imgIndex % 5}: ${((character.endTime - character.startTime) / 1000).toFixed(2)}s`;
+    label.innerText = `レーン ${character.imgIndex % 5}-finish`;
 
     // ラベルを配置
-    label.style.left = `${character.x + 50}px`; // キャラクターのX座標 + 少し右
+    label.style.left = `${character.x - 100}px`; // キャラクターのX座標 + 少し右
     label.style.top = `${character.y}px`; // キャラクターのY座標
     label.style.opacity = 1; // ラベルを表示
 

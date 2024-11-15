@@ -63,11 +63,12 @@ canvas {
     color: #363617;
     padding: 8px;
     border-radius: 5px;
-    font-size: 1em;
+    font-size: 10px;
     font-weight: bold;
+    white-space: nowrap;
+    /* テキストを1行で表示 */
     transform: translateX(-50%);
     opacity: 0;
-    /* 最初は非表示 */
     transition: opacity 0.5s ease-in-out;
 }
 

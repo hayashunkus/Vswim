@@ -103,7 +103,7 @@ function checkGameEnd() {
     if (characters.every(char => char.reachedEnd)) {
         let ranks = characters
             .sort((a, b) => a.endTime - b.endTime)
-            .map((char, index) => ({ name: `Lane ${char.imgIndex % 5}`, rank: index + 1, time: ((char.endTime - char.startTime) / 1000).toFixed(2) }));
+            .map((char, index) => ({ name: `レーン ${char.imgIndex % 5}`, rank: index + 1, time: ((char.endTime - char.startTime) / 1000).toFixed(2) }));
 
         let results = ranks.map(
             r => `${r.name} - Rank: ${r.rank}, Time: ${r.time} seconds`
