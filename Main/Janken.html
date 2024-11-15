@@ -41,7 +41,7 @@
 
         #result {
             margin-top: 20px;
-            font-size: 24px;
+            font-size: 32px;
         }
     </style>
 </head>
@@ -61,31 +61,31 @@
             </div>
         </div>
     </nav>
-
+    <h3>10回やって7回CPUに買ったらお菓子（うまい棒）ゲット</h3>
     <!-- じゃんけんゲーム部分 -->
     <div class="game-container">
         <h1>じゃんけんゲーム</h1>
         <p>選んでください:</p>
         <div class="buttons-container">
-            <button onclick="playGame('グー')">グー</button>
-            <button onclick="playGame('チョキ')">チョキ</button>
-            <button onclick="playGame('パー')">パー</button>
+            <button onclick="playGame('グー✊')">✊グー</button>
+            <button onclick="playGame('チョキ🤞')">🤞チョキ</button>
+            <button onclick="playGame('パー✋')">✋パー</button>
         </div>
         <div id="result"></div>
     </div>
 
     <script>
         function playGame(userChoice) {
-            const choices = ['グー', 'チョキ', 'パー'];
-            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            const choices = ['グー✊', 'チョキ🤞', 'パー✋'];
+            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
 
             let result = '';
             if (userChoice === computerChoice) {
                 result = '引き分け！';
             } else if (
-                (userChoice === 'グー' && computerChoice === 'チョキ') ||
-                (userChoice === 'チョキ' && computerChoice === 'パー') ||
-                (userChoice === 'パー' && computerChoice === 'グー')
+                (userChoice === 'グー✊' && computerChoice === 'チョキ🤞') ||
+                (userChoice === 'チョキ🤞' && computerChoice === 'パー✋') ||
+                (userChoice === 'パー✋' && computerChoice === 'グー✊')
             ) {
                 result = 'あなたの勝ち！';
             } else {
