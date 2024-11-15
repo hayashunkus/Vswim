@@ -17,8 +17,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: calc(100vh - 56px);
-            /* ナビゲーションバーを除く高さ */
+            height: calc(100vh - 50px);
             text-align: center;
         }
 
@@ -30,7 +29,6 @@
             display: flex;
             justify-content: center;
             gap: 20px;
-            /* ボタン間の間隔 */
             margin: 20px 0;
         }
 
@@ -41,7 +39,7 @@
 
         #result {
             margin-top: 20px;
-            font-size: 32px;
+            font-size: 25px;
         }
     </style>
 </head>
@@ -61,7 +59,7 @@
             </div>
         </div>
     </nav>
-    <h3>10回やって7回CPUに買ったらお菓子（うまい棒）ゲット</h3>
+    <h3>＜重要＞10回やって5回CPUに勝ったらお菓子（うまい棒）ゲット</h3>
     <!-- じゃんけんゲーム部分 -->
     <div class="game-container">
         <h1>じゃんけんゲーム</h1>
@@ -72,10 +70,20 @@
             <button onclick="playGame('パー✋')">✋パー</button>
         </div>
         <div id="result"></div>
+        <div id="final-result"></div>
     </div>
 
     <script>
+        // 勝利回数と試行回数を管理
+        let winCount = 0;
+        let playCount = 0;
+
         function playGame(userChoice) {
+            if (playCount >= 10) {
+                document.getElementById('final-result').innerHTML = 'ゲーム終了！リロードして再挑戦してください。';
+                return;
+            }
+
             const choices = ['グー✊', 'チョキ🤞', 'パー✋'];
             const computerChoice = choices[Math.floor(Math.random() * choices.length)];
 
@@ -88,15 +96,29 @@
                 (userChoice === 'パー✋' && computerChoice === 'グー✊')
             ) {
                 result = 'あなたの勝ち！';
+                winCount++;
             } else {
                 result = 'あなたの負け！';
             }
 
+            playCount++;
             document.getElementById('result').innerHTML = `
                 あなた: ${userChoice}<br>
                 コンピュータ: ${computerChoice}<br>
-                ${result}
+                ${result}<br>
+                現在の勝利回数: ${winCount}<br>
+                残り試行回数: ${10 - playCount}
             `;
+
+            if (playCount === 10) {
+                const finalMessage = winCount >= 5 ?
+                    'おめでとう！お菓子ゲット！🎉' :
+                    '残念！また挑戦してください！';
+                document.getElementById('final-result').innerHTML = `
+                    <h2>${finalMessage}</h2>
+                    あなたの勝利回数: ${winCount}
+                `;
+            }
         }
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
