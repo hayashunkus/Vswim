@@ -28,12 +28,12 @@ function calculateAndDisplayResults() {
     }
 
     // ストロークテンポから腕の回転速度を設定
-    speed = 2 * Math.PI * strt / 60; // 秒単位で角速度を設定
+    speed = 2 * Math.PI / (strt * 50); // 秒単位で角速度を設定
     changeSpeed(speed * 0.4); // 更新した speed を脚の方向にも反映
     // 速度を計算（ストローク長 × ストロークテンポ）
-    const swimSpeed = strl * strt;
-    //50mのおおよそのタイムを出力
-    const Speed50 = 50 / swimSpeed;
+    const swimSpeed = strl / strt;
+    //50mのおおよそのタイムを出力 45は飛び込みを考慮
+    const Speed50 = 45 / swimSpeed;
     // ヒトの断面積 A を計算
     const A = 0.20247 * Math.pow(height / 100, 0.725) * Math.pow(weight, 0.425);
     // 抵抗力 R を計算　Cd=0.7
@@ -43,7 +43,7 @@ function calculateAndDisplayResults() {
     const P = R * swimSpeed;
     // 結果表示
     document.getElementById("result").innerHTML =
-        `速度: ${swimSpeed.toFixed(2)} m/s<br> 50m time: ${Speed50.toFixed(2)}s <br> 抵抗力 R: ${R.toFixed(2)} N<br>パワー P: ${P.toFixed(2)} W<br>ストロークテンポ: ${strt.toFixed(2)} 回/秒<br>角速度（speed）:${speed.toFixed(2)}`;
+        `速度: ${swimSpeed.toFixed(2)} m/s<br> 50m time: ${Speed50.toFixed(2)}s <br> 抵抗力 R: ${R.toFixed(2)} N<br>パワー P: ${P.toFixed(2)} W<br>ストロークテンポ: ${strt.toFixed(2)} s/回<br>ストローク長:${strl.toFixed(2)}`;
 }
 
 function moveForward(distance) {
@@ -64,7 +64,7 @@ function resetAnimation() {
 
     // 結果表示のリセット
     document.getElementById("result").innerHTML =
-        `速度: 0 m/s<br> 抵抗力 R: 0 N<br>パワー P: 0 W<br>ストロークテンポ: 0 回/s<br>角速度(speed): 0 rad/fps`;
+        `速度: 0 m/s<br> 抵抗力 R: 0 N<br>パワー P: 0 W<br>ストロークテンポ: 0 s/回<br>ストローク長: 0 m/回`;
     // 入力フォームをリセット
     document.getElementById("high").value = "";   // 身長をリセット
     document.getElementById("weight").value = ""; // 体重をリセット
