@@ -16,6 +16,15 @@
             min-height: 100vh;
         }
 
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 24px;
+        }
+
         .content {
             display: flex;
             flex-direction: column;
@@ -26,8 +35,8 @@
 
         .roulette-container {
             position: relative;
-            width: 300px;
-            height: 300px;
+            width: 250px;
+            height: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -42,7 +51,7 @@
             height: 100%;
             border: 5px solid rgb(50, 120, 180);
             border-radius: 50%;
-            background: conic-gradient(rgb(250, 150, 150) 0% 45%, rgb(150, 220, 150) 45% 75%, rgb(150, 140, 200) 75% 100%);
+            background: conic-gradient(rgb(240, 145, 70) 0% 40%, rgb(150, 220, 150) 40% 70%, rgb(145, 130, 230) 70% 90%, rgb(172, 205, 236) 90% 100%);
         }
 
         .needle {
@@ -59,7 +68,7 @@
         .button-group {
             position: fixed;
             top: 300px;
-            left:30px;
+            left: 30px;
         }
 
         .button-group button {
@@ -84,9 +93,9 @@
             </div>
         </div>
     </nav>
-    <h1>Roulette for selecting arm wrestlers</h1>
-    <h2>注）4回まで回せます<br>●オレンジ：vs競泳主任、緑：vs主務、紫：vs会計　です
-        <br>チャレンジは何回でもできます。誰かに勝てたらお菓子（うまい棒）がもらえるよ!!
+    <h1>VScode de Arm wrestling</h1>
+    <h2>　注）1回だけまわしてください<br>　【オレンジ】vs ハヤシュン　【緑】vsしまゆー　【紫】vs h_ryo　【水色】vs いぬかき
+        <br>ハヤシュンかしまゆーに勝てたら景品ゲット!!（数量限定） <br>チャレンジは何回でもOK!!
     </h2>
     <div class="content">
         <div class="roulette-container">
@@ -102,7 +111,7 @@
 
     <script>
         let clickCount = 0;
-        const maxClicks = 4;
+        const maxClicks = 1;
 
         // ルーレットを回す処理
         document.getElementById('spinButton').addEventListener('click', function () {
@@ -116,7 +125,7 @@
                 if (clickCount >= maxClicks) {
                     setTimeout(() => {
                         alert('これ以上回すことはできません.');
-                        this.disabled = true; // Disable the spin button after 4 clicks and show alert
+                        this.disabled = true; // Disable the spin button after 1 clicks and show alert
                     }, 3000); // Delay to ensure the alert appears after the spinning ends
                 }
             }
